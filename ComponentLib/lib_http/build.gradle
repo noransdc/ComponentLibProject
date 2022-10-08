@@ -1,0 +1,82 @@
+plugins {
+    id 'com.android.library'
+    id 'maven'
+    id("com.google.devtools.ksp") version "1.6.10-1.0.2"
+}
+apply from: "${rootProject.rootDir}/maven.gradle"
+apply from: "${rootProject.rootDir}/project.gradle"
+
+
+android {
+    compileSdkVersion ver.compileSdkVersion
+
+    defaultConfig {
+        minSdkVersion ver.minSdkVersion
+        targetSdkVersion ver.targetSdkVersion
+        versionCode ver.versionCode
+        versionName ver.versionName
+
+        //annotationProcessor传参方式，需要在android.defaultConfig标签下使用
+        javaCompileOptions {
+            annotationProcessorOptions {
+                arguments = [
+                        rxhttp_rxjava: '3.1.1',
+                ]
+            }
+        }
+
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+}
+
+dependencies {
+    implementation fileTree(include: ['*.jar'], dir: 'libs')
+    compileOnly dep.appcompat
+
+    api dep.okhttp
+    api dep.rxhttp
+    // ksp/kapt/annotationProcessor 选其一
+    annotationProcessor dep.rxhttp_compiler
+
+    api dep.rxjava3
+    api dep.rxandroid
+    api dep.rxlife_rxjava3 //管理RxJava3生命周期，页面销毁，关闭请求
+
+}
+
+
+uploadArchives {
+    repositories.mavenDeployer {
+        def versionName = "1.0.6-SNAPSHOT"
+//        def versionName = "1.0.1"
+        def url
+        if (versionName.toUpperCase().contains("SNAPSHOT")) {
+            url = nexus.snapshotUrl
+        } else {
+            url = nexus.releaseUrl
+        }
+
+        repository(url: url) {
+            // nexus账号的用户名和密码
+            authentication(userName: nexus.username, password: nexus.password)
+        }
+        // library的包名
+        pom.project {
+            version versionName
+            artifactId "lib-http"
+            groupId nexus.groupId
+            packaging nexus.packaging
+//            description 'common-1.0.1'
+        }
+    }
+}

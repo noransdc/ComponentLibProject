@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <declare-styleable name="RoundImageView">
+        <!--全圆角半径大小-->
+        <attr name="riv_radius" format="dimension"/>
+        <!--左上圆角半径大小-->
+        <attr name="riv_radius_top_left" format="dimension"/>
+        <!--右上圆角半径大小-->
+        <attr name="riv_radius_top_right" format="dimension"/>
+        <!--左下圆角半径大小-->
+        <attr name="riv_radius_bottom_left" format="dimension"/>
+        <!--右下圆角半径大小-->
+        <attr name="riv_radius_bottom_right" format="dimension"/>
+        <!--边框是否覆盖在图片上-->
+        <attr name="riv_border_over" format="boolean"/>
+        <!--边框宽度-->
+        <attr name="riv_border_width" format="dimension"/>
+        <!--边框颜色-->
+        <attr name="riv_border_color" format="color"/>
+    </declare-styleable>
+
+</resources>

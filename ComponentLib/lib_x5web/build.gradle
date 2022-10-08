@@ -1,0 +1,68 @@
+plugins {
+    id 'com.android.library'
+    id 'maven'
+}
+apply from: "${rootProject.rootDir}/maven.gradle"
+apply from: "${rootProject.rootDir}/project.gradle"
+
+
+android {
+    compileSdkVersion ver.compileSdkVersion
+
+    defaultConfig {
+        minSdkVersion ver.minSdkVersion
+        targetSdkVersion ver.targetSdkVersion
+        versionCode ver.versionCode
+        versionName ver.versionName
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+}
+
+dependencies {
+    api fileTree(include: ['*.jar'], dir: 'libs')
+    implementation dep.appcompat
+    implementation dep.okgo
+    implementation dep.glide
+    annotationProcessor dep.glide_compiler
+    //permission
+    implementation dep.permission_acp
+    implementation dep.localbroadcastmanager
+
+}
+
+
+uploadArchives {
+    repositories.mavenDeployer {
+        def versionName = "1.0.2-SNAPSHOT"
+//        def versionName = "1.0.1"
+        def url
+        if (versionName.toUpperCase().contains("SNAPSHOT")) {
+            url = nexus.snapshotUrl
+        } else {
+            url = nexus.releaseUrl
+        }
+
+        repository(url: url) {
+            // nexus账号的用户名和密码
+            authentication(userName: nexus.username, password: nexus.password)
+        }
+        // library的包名
+        pom.project {
+            version versionName
+            artifactId "lib-x5-web"
+            groupId nexus.groupId
+            packaging nexus.packaging
+//            description 'common-1.0.1'
+        }
+    }
+}

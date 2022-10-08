@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:id="@+id/ll_date_root"
+    >
+
+    <com.intertive.wheelview.ex.YearWheelView
+        android:id="@+id/wv_year"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="3"
+        android:layout_gravity="center"
+        android:minWidth="70dp"
+        />
+
+    <TextView
+        android:id="@+id/tv_year"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:layout_gravity="center"
+        android:text="年"
+        tools:textSize="20sp"
+        android:visibility="gone"
+        android:gravity="center"
+        />
+
+    <com.intertive.wheelview.ex.MonthWheelView
+        android:id="@+id/wv_month"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="3"
+        android:layout_gravity="center"
+        android:minWidth="70dp"
+        />
+
+    <TextView
+        android:id="@+id/tv_month"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:layout_gravity="center"
+        android:text="月"
+        tools:textSize="20sp"
+        android:visibility="gone"
+        android:gravity="center"
+        />
+
+    <com.intertive.wheelview.ex.DayWheelView
+        android:id="@+id/wv_day"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="3"
+        android:layout_gravity="center"
+        android:minWidth="70dp"
+        />
+
+    <TextView
+        android:id="@+id/tv_day"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:layout_gravity="center"
+        android:text="日"
+        tools:textSize="20sp"
+        android:visibility="gone"
+        android:gravity="center"
+        />
+
+</LinearLayout>

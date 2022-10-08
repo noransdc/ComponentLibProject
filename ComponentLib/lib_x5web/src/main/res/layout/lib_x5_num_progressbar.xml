@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:custom="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="#ffffff"
+    android:gravity="center_vertical"
+    android:orientation="vertical">
+
+    <com.intertive.x5web.numberprogressbar.NumberProgressBar
+        android:id="@+id/number_progress"
+        style="@style/NumberProgressBar_Default"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="20dp"
+        custom:progress_current="0" />
+
+    <TextView
+        android:id="@+id/number_progress_cancle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_margin="15dp"
+        android:background="#ffffff"
+        android:text="取消下载"
+        android:textColor="#97c1e4" />
+
+</LinearLayout>

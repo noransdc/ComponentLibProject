@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:id="@+id/ll_progress_wv_container"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <ProgressBar
+            android:id="@+id/pb_progress_line_loading"
+            style="?android:attr/progressBarStyleHorizontal"
+            android:layout_width="match_parent"
+            android:layout_height="2dp"
+            android:progressDrawable="@drawable/lib_x5_progress_bronze"
+            android:max="100"
+            android:progress="0"
+            android:visibility="gone" />
+
+        <FrameLayout
+            android:id="@+id/fl_progress_wv_full"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:visibility="gone" />
+
+        <com.intertive.x5web.x5.GameWebView
+            android:id="@+id/wv_progress_game"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:overScrollMode="never"/>
+
+        <LinearLayout
+            android:id="@+id/ll_progress_wv_fail"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:visibility="gone" />
+
+    </LinearLayout>
+
+    <ProgressBar
+        android:id="@+id/pb_progress_circle_loading"
+        style="@android:style/Widget.Holo.ProgressBar"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_centerInParent="true"
+        android:indeterminateDrawable="@drawable/lib_x5_loading_animation"
+        android:visibility="gone" />
+
+</RelativeLayout>
+

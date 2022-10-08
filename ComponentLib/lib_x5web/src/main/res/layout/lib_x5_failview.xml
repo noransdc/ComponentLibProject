@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#ECECEC"
+    android:gravity="center"
+    android:orientation="vertical">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:drawablePadding="10dp"
+        android:drawableTop="@drawable/lib_x5_ic_web_error"
+        android:gravity="center"
+        android:text="当前网络异常，请稍后再试..."
+        android:textColor="#646464"
+        android:textSize="15dp" />
+
+</LinearLayout>
