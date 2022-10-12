@@ -10,6 +10,7 @@ import io.reactivex.rxjava3.core.Observable;
 import io.reactivex.rxjava3.core.ObservableEmitter;
 import io.reactivex.rxjava3.core.ObservableOnSubscribe;
 import io.reactivex.rxjava3.core.Scheduler;
+import io.reactivex.rxjava3.disposables.Disposable;
 import io.reactivex.rxjava3.schedulers.Schedulers;
 
 /**
@@ -24,7 +25,7 @@ public class RxScheduler {
     }
 
 
-    public static <T> void execute(OnRxSubNextListener<T> subListener, OnRxMainNextListener<T> mainListener, Scheduler scheduler) {
+    public static <T> void execute(OnRxSubListener<T> subListener, OnRxMainListener<T> mainListener, Scheduler scheduler) {
         Scheduler mainScheduler;
         if (scheduler == null){
             mainScheduler = Schedulers.from(ExecutorManager.getInstance().getExecutor());
@@ -36,7 +37,7 @@ public class RxScheduler {
             @Override
             public void subscribe(@NonNull ObservableEmitter<T> emitter) throws Throwable {
                 if (subListener != null) {
-                    emitter.onNext(subListener.onSubNext());
+                    emitter.onNext(subListener.onSubThread());
 //                    subListener.onSubComplete();
                 }
                 emitter.onComplete();
@@ -50,69 +51,69 @@ public class RxScheduler {
         }
     }
 
-    public static <T> void execute(OnRxSubComListener subListener, OnRxMainComListener mainListener, Scheduler scheduler) {
-        Scheduler mainScheduler;
-        if (scheduler == null){
-            mainScheduler = Schedulers.from(ExecutorManager.getInstance().getExecutor());
-        } else {
-            mainScheduler = scheduler;
-        }
-        Observable<T> observable = Observable.create(new ObservableOnSubscribe<T>() {
-            @Override
-            public void subscribe(@NonNull ObservableEmitter<T> emitter) throws Throwable {
-                if (subListener != null) {
-//                    emitter.onNext(subListener.onSubNext());
-                    subListener.onSubComplete();
-                }
-                emitter.onComplete();
-            }
-        }).subscribeOn(mainScheduler)
-                .observeOn(AndroidSchedulers.mainThread());
+//    public static <T> void execute(OnRxSubComListener subListener, OnRxMainComListener mainListener, Scheduler scheduler) {
+//        Scheduler mainScheduler;
+//        if (scheduler == null){
+//            mainScheduler = Schedulers.from(ExecutorManager.getInstance().getExecutor());
+//        } else {
+//            mainScheduler = scheduler;
+//        }
+//        Observable<T> observable = Observable.create(new ObservableOnSubscribe<T>() {
+//            @Override
+//            public void subscribe(@NonNull ObservableEmitter<T> emitter) throws Throwable {
+//                if (subListener != null) {
+////                    emitter.onNext(subListener.onSubNext());
+//                    subListener.onSubComplete();
+//                }
+//                emitter.onComplete();
+//            }
+//        }).subscribeOn(mainScheduler)
+//                .observeOn(AndroidSchedulers.mainThread());
+//
+//        if (mainListener != null) {
+//            observable.subscribe(mainListener);
+//        } else {
+//            observable.subscribe();
+//        }
+//    }
 
-        if (mainListener != null) {
-            observable.subscribe(mainListener);
-        } else {
-            observable.subscribe();
-        }
-    }
-
-    public static <T> void execute(OnRxSubNextListener<T> subListener) {
+    public static <T> void execute(OnRxSubListener<T> subListener) {
         execute(subListener, null, null);
     }
 
-    public static <T> void execute(OnRxSubNextListener<T> subListener, OnRxMainNextListener<T> mainListener) {
+    public static <T> void execute(OnRxSubListener<T> subListener, OnRxMainListener<T> mainListener) {
         execute(subListener, mainListener, null);
     }
 
-    public static <T> void execute(OnRxSubComListener subListener) {
-        execute(subListener, null, null);
-    }
+//    public static <T> void execute(OnRxSubComListener subListener) {
+//        execute(subListener, null, null);
+//    }
+//
+//    public static <T> void execute(OnRxSubComListener subListener, OnRxMainComListener mainListener) {
+//        execute(subListener, mainListener, null);
+//    }
 
-    public static <T> void execute(OnRxSubComListener subListener, OnRxMainComListener mainListener) {
-        execute(subListener, mainListener, null);
-    }
-
-    public static <T> void executeSingle(OnRxSubNextListener<T> subListener, OnRxMainNextListener<T> mainListener) {
+    public static <T> void executeSingle(OnRxSubListener<T> subListener, OnRxMainListener<T> mainListener) {
         execute(subListener, mainListener, Schedulers.single());
     }
 
-    public static <T> void executeSingle(OnRxSubNextListener<T> subListener) {
+    public static <T> void executeSingle(OnRxSubListener<T> subListener) {
         executeSingle(subListener, null);
     }
 
-    public static <T> void executeIo(OnRxSubNextListener<T> subListener, OnRxMainNextListener<T> mainListener) {
+    public static <T> void executeIo(OnRxSubListener<T> subListener, OnRxMainListener<T> mainListener) {
         execute(subListener, mainListener, Schedulers.io());
     }
 
-    public static <T> void executeIo(OnRxSubNextListener<T> subListener) {
+    public static <T> void executeIo(OnRxSubListener<T> subListener) {
         executeIo(subListener, null);
     }
 
-    public static <T> void executeComputation(OnRxSubNextListener<T> subListener, OnRxMainNextListener<T> mainListener) {
+    public static <T> void executeComputation(OnRxSubListener<T> subListener, OnRxMainListener<T> mainListener) {
         execute(subListener, mainListener, Schedulers.computation());
     }
 
-    public static <T> void executeComputation(OnRxSubNextListener<T> subListener) {
+    public static <T> void executeComputation(OnRxSubListener<T> subListener) {
         executeComputation(subListener, null);
     }
 

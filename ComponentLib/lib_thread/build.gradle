@@ -34,13 +34,12 @@ dependencies {
     implementation dep.rxjava3
     implementation dep.rxandroid
 
-
 }
 
 
 uploadArchives {
     repositories.mavenDeployer {
-        def versionName = "1.0.1-SNAPSHOT"
+        def versionName = "1.0.7-SNAPSHOT"
 //        def versionName = "1.0.1"
         def url
         if (versionName.toUpperCase().contains("SNAPSHOT")) {

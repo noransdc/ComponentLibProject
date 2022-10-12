@@ -4,8 +4,8 @@ package com.intertive.thread.rxjava;
  * @author Nevio
  * on 2022/2/7
  */
-public interface OnRxSubNextListener<T> {
+public interface OnRxSubListener<T> {
 
-    T onSubNext();
+    T onSubThread();
 
 }
