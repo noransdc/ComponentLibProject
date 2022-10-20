@@ -26,7 +26,7 @@ public class MainActivity extends AppCompatActivity {
 
     private void test1(){
         findViewById(R.id.btn_1).setOnClickListener(v -> {
-            startActivity(new Intent(getBaseContext(), Test2Activity.class));
+            startActivity(new Intent(getBaseContext(), TestActivity.class));
         });
 
         findViewById(R.id.btn_2).setOnClickListener(v -> {
