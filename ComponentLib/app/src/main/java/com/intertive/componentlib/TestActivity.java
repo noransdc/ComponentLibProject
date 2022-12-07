@@ -13,10 +13,16 @@ import androidx.viewpager.widget.ViewPager;
 
 import com.flyco.tablayout.SlidingTabLayout;
 import com.flyco.tablayout.TabTitle;
+import com.intertive.http.parser.DataParser;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
+
+import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
+import io.reactivex.rxjava3.functions.Consumer;
+import io.reactivex.rxjava3.schedulers.Schedulers;
+import rxhttp.wrapper.param.RxHttp;
 
 /**
  * @author Nevio
@@ -42,6 +48,21 @@ public class TestActivity extends AppCompatActivity {
         tabLayout = findViewById(R.id.stl_tab_layout);
         viewPager = findViewById(R.id.vp_view_pager);
         clickBtn = findViewById(R.id.btn_click);
+
+
+        RxHttp.get("http://www.google.com")
+                .add("name", "zhangsan")
+                .asParser(new DataParser<String>(){})
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(data -> {
+                    Log.w("http success", data);
+                }, new Consumer<Throwable>() {
+                    @Override
+                    public void accept(Throwable throwable) throws Throwable {
+                        Log.w("http failed", throwable.getMessage());
+                    }
+                });
 
 
         initViewPager();

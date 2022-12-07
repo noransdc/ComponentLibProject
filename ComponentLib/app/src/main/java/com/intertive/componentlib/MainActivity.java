@@ -4,8 +4,15 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 
+import com.intertive.http.parser.DataParser;
 import com.intertive.x5web.WebViewPlugin;
+
+import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
+import io.reactivex.rxjava3.functions.Consumer;
+import io.reactivex.rxjava3.schedulers.Schedulers;
+import rxhttp.wrapper.param.RxHttp;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -19,6 +26,7 @@ public class MainActivity extends AppCompatActivity {
 
 
         WebViewPlugin.getInstance().init(getApplication(), new WebViewConfig());
+
 
 
 

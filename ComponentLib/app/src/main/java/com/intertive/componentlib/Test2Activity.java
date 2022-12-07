@@ -37,6 +37,10 @@ public class Test2Activity extends AppCompatActivity {
 
         initBanner(list);
 
+
+
+
+
     }
 
 
