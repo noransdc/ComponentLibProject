@@ -80,6 +80,10 @@ public class TestActivity extends AppCompatActivity {
             tabLayout.updateTitleText(titleList);
         });
 
+        findViewById(R.id.btn_tab).setOnClickListener(v -> {
+            tabLayout.setCurrentTab(1);
+        });
+
     }
 
     private void test(){
@@ -120,8 +124,9 @@ public class TestActivity extends AppCompatActivity {
             }
         });
 
-        tabLayout.setViewPager(viewPager, titleList);
+        tabLayout.setViewPagerTab(viewPager, titleList);
 
+        tabLayout.setCurrentTab(2);
     }
 
 

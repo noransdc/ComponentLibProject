@@ -215,7 +215,7 @@ public class SlidingTabLayout extends HorizontalScrollView implements ViewPager.
     /**
      * 关联ViewPager,用于不想在ViewPager适配器中设置titles数据的情况
      */
-    public void setViewPager(ViewPager vp, List<TabTitle> titleList) {
+    public void setViewPagerTab(ViewPager vp, List<TabTitle> titleList) {
         if (vp == null || vp.getAdapter() == null) {
             throw new IllegalStateException("ViewPager or ViewPager adapter can not be NULL !");
         }
@@ -237,20 +237,20 @@ public class SlidingTabLayout extends HorizontalScrollView implements ViewPager.
         notifyDataSetChanged();
     }
 
-    public void setViewPagerString(ViewPager vp, List<String> titles) {
+    public void setViewPager(ViewPager vp, List<String> titles) {
         List<TabTitle> list = new ArrayList<>();
         for (String title : titles) {
             list.add(new TabTitle(title));
         }
-        setViewPager(vp, list);
+        setViewPagerTab(vp, list);
     }
 
-    public void setViewPagerString(ViewPager vp, String[] titles) {
+    public void setViewPager(ViewPager vp, String[] titles) {
         List<TabTitle> list = new ArrayList<>();
         for (String title : titles) {
             list.add(new TabTitle(title));
         }
-        setViewPager(vp, list);
+        setViewPagerTab(vp, list);
     }
 
     public void updateTitleText(List<TabTitle> titleList) {
@@ -712,6 +712,7 @@ public class SlidingTabLayout extends HorizontalScrollView implements ViewPager.
     public void setCurrentTab(int currentTab) {
         this.mCurrentTab = currentTab;
         mViewPager.setCurrentItem(currentTab);
+        updateTabStyles();
 
     }
 
