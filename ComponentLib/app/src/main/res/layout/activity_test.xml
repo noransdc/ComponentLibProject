@@ -42,7 +42,7 @@
         app:tl_text_select_color2="#fc0"
         app:tl_text_unselect_color2="#333333"
         app:tl_text_padding_left2="5dp"
-        app:tl_indicator_color="#00000000"
+        app:tl_indicator_drawable="@drawable/corner_1"
         app:tl_text_size_select="18sp"
         app:tl_text_size_unselect="14sp"
         app:tl_text_size_select2="18sp"

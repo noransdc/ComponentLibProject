@@ -81,7 +81,7 @@ public class TestActivity extends AppCompatActivity {
         });
 
         findViewById(R.id.btn_tab).setOnClickListener(v -> {
-            tabLayout.setCurrentTab(1);
+            tabLayout.setIndicatorDrawable(getDrawable(R.drawable.ia_corner_orange_fe5e00_22));
         });
 
     }

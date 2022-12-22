@@ -43,9 +43,10 @@ dependencies {
     annotationProcessor 'com.github.bumptech.glide:compiler:4.12.0'
 
 
-    implementation project(':lib_tablayout')
+//    implementation project(':lib_tablayout')
     implementation project(':lib_thread')
     implementation project(':lib_banner')
     implementation project(':lib_http')
 
+    implementation 'com.intertive.component:lib-thread:1.0.7-SNAPSHOT'
 }

@@ -780,6 +780,11 @@ public class SlidingTabLayout extends HorizontalScrollView implements ViewPager.
         invalidate();
     }
 
+    public void setIndicatorDrawable(Drawable drawable){
+        indicatorDrawableRes = drawable;
+        invalidate();
+    }
+
     public void setUnderlineColor(int underlineColor) {
         this.mUnderlineColor = underlineColor;
         invalidate();
