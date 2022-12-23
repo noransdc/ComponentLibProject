@@ -37,8 +37,8 @@ dependencies {
 
 uploadArchives {
     repositories.mavenDeployer {
-//        def versionName = "1.0.8-SNAPSHOT"
-        def versionName = "1.0.1"
+        def versionName = "1.0.9-SNAPSHOT"
+//        def versionName = "1.0.2"
         def url
         if (versionName.toUpperCase().contains("SNAPSHOT")) {
             url = nexus.snapshotUrl
@@ -56,7 +56,7 @@ uploadArchives {
             artifactId "lib-tab-layout"
             groupId nexus.groupId
             packaging nexus.packaging
-//            description 'common-1.0.1'
+            description 'common-1.0.1'
         }
     }
 }
