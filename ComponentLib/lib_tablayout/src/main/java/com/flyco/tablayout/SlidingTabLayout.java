@@ -7,6 +7,7 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Path;
 import android.graphics.Rect;
+import android.graphics.Typeface;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.GradientDrawable;
 import android.os.Bundle;
@@ -117,6 +118,9 @@ public class SlidingTabLayout extends HorizontalScrollView implements ViewPager.
     private int mLastScrollX;
     private int mHeight;
     private boolean mSnapOnTabClick;
+
+    private Typeface titleTypeFace2;
+
 
     public SlidingTabLayout(Context context) {
         this(context, null, 0);
@@ -437,6 +441,9 @@ public class SlidingTabLayout extends HorizontalScrollView implements ViewPager.
                     textView2.getPaint().setFakeBoldText(true);
                 } else if (mTextBold2 == TEXT_BOLD_NONE) {
                     textView2.getPaint().setFakeBoldText(false);
+                }
+                if (titleTypeFace2 != null){
+                    textView2.setTypeface(titleTypeFace2);
                 }
             }
         }
@@ -783,6 +790,10 @@ public class SlidingTabLayout extends HorizontalScrollView implements ViewPager.
     public void setIndicatorDrawable(Drawable drawable){
         indicatorDrawableRes = drawable;
         invalidate();
+    }
+
+    public void setTitleTypeFace2(Typeface typeface){
+        this.titleTypeFace2 = typeface;
     }
 
     public void setUnderlineColor(int underlineColor) {
