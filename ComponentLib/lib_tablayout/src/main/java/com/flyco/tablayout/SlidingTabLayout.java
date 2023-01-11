@@ -42,7 +42,7 @@ public class SlidingTabLayout extends HorizontalScrollView implements ViewPager.
 
     private final Context mContext;
     private ViewPager mViewPager;
-    private List<TabTitle> mTitleList;
+    private List<TabTitle> mTitleList = new ArrayList<>();
     private final LinearLayout mTabsContainer;
     private int mCurrentTab;
     private float mCurrentPositionOffset;
@@ -233,8 +233,9 @@ public class SlidingTabLayout extends HorizontalScrollView implements ViewPager.
         }
 
         this.mViewPager = vp;
-        this.mTitleList = titleList;
-//        mTitleList.addAll(titleList);
+//        this.mTitleList = titleList;
+        mTitleList.clear();
+        mTitleList.addAll(titleList);
 
         this.mViewPager.removeOnPageChangeListener(this);
         this.mViewPager.addOnPageChangeListener(this);
