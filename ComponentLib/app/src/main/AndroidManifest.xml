@@ -21,7 +21,6 @@
         </activity>
 
         <activity android:name=".TestActivity"/>
-        <activity android:name=".WebActivity"/>
         <activity android:name=".Test2Activity"/>
 
 

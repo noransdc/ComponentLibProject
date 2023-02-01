@@ -7,7 +7,6 @@ import android.os.Bundle;
 import android.util.Log;
 
 import com.intertive.http.parser.DataParser;
-import com.intertive.x5web.WebViewPlugin;
 
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
 import io.reactivex.rxjava3.functions.Consumer;
@@ -25,7 +24,6 @@ public class MainActivity extends AppCompatActivity {
         test1();
 
 
-        WebViewPlugin.getInstance().init(getApplication(), new WebViewConfig());
 
 
 
@@ -37,9 +35,6 @@ public class MainActivity extends AppCompatActivity {
             startActivity(new Intent(getBaseContext(), TestActivity.class));
         });
 
-        findViewById(R.id.btn_2).setOnClickListener(v -> {
-            startActivity(new Intent(getBaseContext(), WebActivity.class));
 
-        });
     }
 }

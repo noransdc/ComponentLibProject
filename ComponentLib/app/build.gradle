@@ -37,7 +37,7 @@ dependencies {
     implementation dep.constraintlayout
 
     implementation project(':lib_roundimg')
-    implementation project(':lib_x5web')
+//    implementation project(':lib_x5web')
 
     api 'com.github.bumptech.glide:glide:4.12.0'
     annotationProcessor 'com.github.bumptech.glide:compiler:4.12.0'
@@ -45,7 +45,7 @@ dependencies {
 
     implementation project(':lib_tablayout')
     implementation project(':lib_thread')
-    implementation project(':lib_banner')
+//    implementation project(':lib_banner')
     implementation project(':lib_http')
 
 }
