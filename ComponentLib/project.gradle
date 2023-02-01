@@ -13,7 +13,7 @@ rootProject.ext {
     dep = [
             appcompat            : 'androidx.appcompat:appcompat:1.2.0',
             material             : 'com.google.android.material:material:1.2.0',
-            constraintlayout     : 'androidx.constraintlayout:constraintlayout:2.1.0',
+            constraintlayout     : 'androidx.constraintlayout:constraintlayout:1.1.0',
             okhttp               : 'com.squareup.okhttp3:okhttp:4.9.1',
             rxhttp               : 'com.github.liujingxing.rxhttp:rxhttp:2.8.3',
             rxhttp_compiler      : 'com.github.liujingxing.rxhttp:rxhttp-compiler:2.8.3',
