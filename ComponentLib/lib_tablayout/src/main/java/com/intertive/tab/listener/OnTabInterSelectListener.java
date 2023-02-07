@@ -1,6 +1,6 @@
 package com.intertive.tab.listener;
 
-public interface OnTabSelectListener {
+public interface OnTabInterSelectListener {
     void onTabSelect(int position);
     void onTabReselect(int position);
 }

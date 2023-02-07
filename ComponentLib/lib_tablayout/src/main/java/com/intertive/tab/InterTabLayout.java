@@ -26,7 +26,7 @@ import android.widget.TextView;
 import androidx.viewpager.widget.PagerAdapter;
 import androidx.viewpager.widget.ViewPager;
 
-import com.intertive.tab.listener.OnTabSelectListener;
+import com.intertive.tab.listener.OnTabInterSelectListener;
 import com.intertive.tab.utils.InterMsgUtils;
 import com.intertive.tab.widget.InterMsgView;
 import com.intertive.tablayout.R;
@@ -308,7 +308,7 @@ public class InterTabLayout extends HorizontalScrollView implements ViewPager.On
         this.mTabCount = pagerAdapter.getCount();
         View tabLayout;
         for (int i = 0; i < mTabCount; i++) {
-            tabLayout = View.inflate(mContext, R.layout.layout_tab, null);
+            tabLayout = View.inflate(mContext, R.layout.inter_layout_tab, null);
             String title1, title2;
             if (mTitleList != null && i < mTitleList.size()) {
                 InterTabTitle interTabTitle = mTitleList.get(i);
@@ -333,7 +333,7 @@ public class InterTabLayout extends HorizontalScrollView implements ViewPager.On
             return;
         }
 
-        View tabView = View.inflate(mContext, R.layout.layout_tab, null);
+        View tabView = View.inflate(mContext, R.layout.inter_layout_tab, null);
         mTitleList.add(new InterTabTitle(title));
 
         if (mTabCount >= mTitleList.size()) {
@@ -1048,9 +1048,9 @@ public class InterTabLayout extends HorizontalScrollView implements ViewPager.On
         return (InterMsgView) tabView.findViewById(R.id.rtv_msg_tip);
     }
 
-    private OnTabSelectListener mListener;
+    private OnTabInterSelectListener mListener;
 
-    public void setOnTabSelectListener(OnTabSelectListener listener) {
+    public void setOnTabSelectListener(OnTabInterSelectListener listener) {
         this.mListener = listener;
     }
 
