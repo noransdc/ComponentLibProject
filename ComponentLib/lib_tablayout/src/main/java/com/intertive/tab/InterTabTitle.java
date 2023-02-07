@@ -1,28 +1,28 @@
-package com.flyco.tablayout;
+package com.intertive.tab;
 
 /**
  * @author Nevio
  * on 2022/10/20
  */
-public class TabTitle {
+public class InterTabTitle {
 
     private String id;
     private String title1;
     private String title2;
 
-    public TabTitle() {
+    public InterTabTitle() {
     }
 
-    public TabTitle(String title1) {
+    public InterTabTitle(String title1) {
         this.title1 = title1;
     }
 
-    public TabTitle(String title1, String title2) {
+    public InterTabTitle(String title1, String title2) {
         this.title1 = title1;
         this.title2 = title2;
     }
 
-    public TabTitle(String id, String title1, String title2) {
+    public InterTabTitle(String id, String title1, String title2) {
         this.id = id;
         this.title1 = title1;
         this.title2 = title2;

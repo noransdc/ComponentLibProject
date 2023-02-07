@@ -21,7 +21,7 @@
             android:singleLine="true"/>
     </LinearLayout>
 
-    <com.flyco.tablayout.widget.MsgView
+    <com.intertive.tab.widget.InterMsgView
         android:layout_toRightOf="@+id/ll_tap"
         android:id="@+id/rtv_msg_tip"
         xmlns:mv="http://schemas.android.com/apk/res-auto"
@@ -31,9 +31,9 @@
         android:textColor="#ffffff"
         android:textSize="11.5sp"
         android:visibility="gone"
-        mv:mv_backgroundColor="#FD481F"
-        mv:mv_isRadiusHalfHeight="true"
-        mv:mv_strokeColor="#ffffff"
-        mv:mv_strokeWidth="1dp"/>
+        mv:mv_inter_backgroundColor="#FD481F"
+        mv:mv_inter_isRadiusHalfHeight="true"
+        mv:mv_inter_strokeColor="#ffffff"
+        mv:mv_inter_strokeWidth="1dp"/>
 
 </RelativeLayout>

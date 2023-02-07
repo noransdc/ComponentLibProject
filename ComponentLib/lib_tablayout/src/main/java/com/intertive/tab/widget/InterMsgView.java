@@ -1,4 +1,4 @@
-package com.flyco.tablayout.widget;
+package com.intertive.tab.widget;
 
 import android.content.Context;
 import android.content.res.TypedArray;
@@ -14,7 +14,7 @@ import com.intertive.tablayout.R;
 
 
 /** 用于需要圆角矩形框背景的TextView的情况,减少直接使用TextView时引入的shape资源文件 */
-public class MsgView extends AppCompatTextView {
+public class InterMsgView extends AppCompatTextView {
     private Context context;
     private GradientDrawable gd_background = new GradientDrawable();
     private int backgroundColor;
@@ -24,28 +24,28 @@ public class MsgView extends AppCompatTextView {
     private boolean isRadiusHalfHeight;
     private boolean isWidthHeightEqual;
 
-    public MsgView(Context context) {
+    public InterMsgView(Context context) {
         this(context, null);
     }
 
-    public MsgView(Context context, AttributeSet attrs) {
+    public InterMsgView(Context context, AttributeSet attrs) {
         this(context, attrs, 0);
     }
 
-    public MsgView(Context context, AttributeSet attrs, int defStyleAttr) {
+    public InterMsgView(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
         this.context = context;
         obtainAttributes(context, attrs);
     }
 
     private void obtainAttributes(Context context, AttributeSet attrs) {
-        TypedArray ta = context.obtainStyledAttributes(attrs, R.styleable.MsgView);
-        backgroundColor = ta.getColor(R.styleable.MsgView_mv_backgroundColor, Color.TRANSPARENT);
-        cornerRadius = ta.getDimensionPixelSize(R.styleable.MsgView_mv_cornerRadius, 0);
-        strokeWidth = ta.getDimensionPixelSize(R.styleable.MsgView_mv_strokeWidth, 0);
-        strokeColor = ta.getColor(R.styleable.MsgView_mv_strokeColor, Color.TRANSPARENT);
-        isRadiusHalfHeight = ta.getBoolean(R.styleable.MsgView_mv_isRadiusHalfHeight, false);
-        isWidthHeightEqual = ta.getBoolean(R.styleable.MsgView_mv_isWidthHeightEqual, false);
+        TypedArray ta = context.obtainStyledAttributes(attrs, R.styleable.InterMsgView);
+        backgroundColor = ta.getColor(R.styleable.InterMsgView_mv_inter_backgroundColor, Color.TRANSPARENT);
+        cornerRadius = ta.getDimensionPixelSize(R.styleable.InterMsgView_mv_inter_cornerRadius, 0);
+        strokeWidth = ta.getDimensionPixelSize(R.styleable.InterMsgView_mv_inter_strokeWidth, 0);
+        strokeColor = ta.getColor(R.styleable.InterMsgView_mv_inter_strokeColor, Color.TRANSPARENT);
+        isRadiusHalfHeight = ta.getBoolean(R.styleable.InterMsgView_mv_inter_isRadiusHalfHeight, false);
+        isWidthHeightEqual = ta.getBoolean(R.styleable.InterMsgView_mv_inter_isWidthHeightEqual, false);
 
         ta.recycle();
     }

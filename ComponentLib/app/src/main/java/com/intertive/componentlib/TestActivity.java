@@ -11,9 +11,9 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentPagerAdapter;
 import androidx.viewpager.widget.ViewPager;
 
-import com.flyco.tablayout.SlidingTabLayout;
-import com.flyco.tablayout.TabTitle;
 import com.intertive.http.parser.DataParser;
+import com.intertive.tab.InterTabLayout;
+import com.intertive.tab.InterTabTitle;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -31,7 +31,7 @@ import rxhttp.wrapper.param.RxHttp;
 public class TestActivity extends AppCompatActivity {
 
 
-    private SlidingTabLayout tabLayout;
+    private InterTabLayout tabLayout;
     private ViewPager viewPager;
     private Button clickBtn;
 
@@ -69,11 +69,11 @@ public class TestActivity extends AppCompatActivity {
 
 
         clickBtn.setOnClickListener(v -> {
-            List<TabTitle> titleList = new ArrayList<>();
+            List<InterTabTitle> titleList = new ArrayList<>();
 
             Random random = new Random();
             for (int i = 0; i < 7; i++) {
-                titleList.add(new TabTitle("title" + random.nextInt(10), random.nextFloat() + ""));
+                titleList.add(new InterTabTitle("title" + random.nextInt(10), random.nextFloat() + ""));
             }
 
             Log.w("tag",  titleList.toString());
@@ -95,14 +95,14 @@ public class TestActivity extends AppCompatActivity {
 
 
 
-        List<TabTitle> titleList = new ArrayList<>();
-        titleList.add(new TabTitle("title1", "a"));
-        titleList.add(new TabTitle("title2", "ab"));
-        titleList.add(new TabTitle("title3", "abc"));
-        titleList.add(new TabTitle("title4", "abcd"));
-        titleList.add(new TabTitle("title5", "a"));
-        titleList.add(new TabTitle("title6", "ab"));
-        titleList.add(new TabTitle("title7", "a"));
+        List<InterTabTitle> titleList = new ArrayList<>();
+        titleList.add(new InterTabTitle("title1", "a"));
+        titleList.add(new InterTabTitle("title2", "ab"));
+        titleList.add(new InterTabTitle("title3", "abc"));
+        titleList.add(new InterTabTitle("title4", "abcd"));
+        titleList.add(new InterTabTitle("title5", "a"));
+        titleList.add(new InterTabTitle("title6", "ab"));
+        titleList.add(new InterTabTitle("title7", "a"));
 
 //        String[] titleArr = new String[]{"title1", "title2", "title3"};
 

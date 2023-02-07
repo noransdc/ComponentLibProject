@@ -32,22 +32,22 @@
 
 
 
-    <com.flyco.tablayout.SlidingTabLayout
+    <com.intertive.tab.InterTabLayout
         android:id="@+id/stl_tab_layout"
         android:layout_width="match_parent"
         android:layout_height="44dp"
-        app:tl_divider_color="#333333"
-        app:tl_text_select_color="#fc0"
-        app:tl_text_unselect_color="#333333"
-        app:tl_text_select_color2="#fc0"
-        app:tl_text_unselect_color2="#333333"
-        app:tl_text_padding_left2="5dp"
-        app:tl_indicator_drawable="@drawable/corner_1"
-        app:tl_text_size_select="18sp"
-        app:tl_text_size_unselect="14sp"
-        app:tl_text_size_select2="18sp"
-        app:tl_text_size_unselect2="14sp"
-        app:tl_tab_padding_width="25dp"
+        app:tl_inter_divider_color="#333333"
+        app:tl_inter_text_select_color="#fc0"
+        app:tl_inter_text_unselect_color="#333333"
+        app:tl_inter_text_select_color2="#fc0"
+        app:tl_inter_text_unselect_color2="#333333"
+        app:tl_inter_text_padding_left2="5dp"
+        app:tl_inter_indicator_drawable="@drawable/corner_1"
+        app:tl_inter_text_size_select="18sp"
+        app:tl_inter_text_size_unselect="14sp"
+        app:tl_inter_text_size_select2="18sp"
+        app:tl_inter_text_size_unselect2="14sp"
+        app:tl_inter_tab_padding_width="25dp"
         />
 
     <androidx.viewpager.widget.ViewPager

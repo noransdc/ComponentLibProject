@@ -1,4 +1,4 @@
-package com.flyco.tablayout;
+package com.intertive.tab;
 
 import android.content.Context;
 import android.content.res.TypedArray;
@@ -26,9 +26,9 @@ import android.widget.TextView;
 import androidx.viewpager.widget.PagerAdapter;
 import androidx.viewpager.widget.ViewPager;
 
-import com.flyco.tablayout.listener.OnTabSelectListener;
-import com.flyco.tablayout.utils.UnreadMsgUtils;
-import com.flyco.tablayout.widget.MsgView;
+import com.intertive.tab.listener.OnTabSelectListener;
+import com.intertive.tab.utils.InterMsgUtils;
+import com.intertive.tab.widget.InterMsgView;
 import com.intertive.tablayout.R;
 
 import java.util.ArrayList;
@@ -38,11 +38,11 @@ import java.util.List;
  * 滑动TabLayout,对于ViewPager的依赖性强
  * https://github.com/H07000223/FlycoTabLayout
  */
-public class SlidingTabLayout extends HorizontalScrollView implements ViewPager.OnPageChangeListener {
+public class InterTabLayout extends HorizontalScrollView implements ViewPager.OnPageChangeListener {
 
     private final Context mContext;
     private ViewPager mViewPager;
-    private List<TabTitle> mTitleList = new ArrayList<>();
+    private List<InterTabTitle> mTitleList = new ArrayList<>();
     private final LinearLayout mTabsContainer;
     private int mCurrentTab;
     private float mCurrentPositionOffset;
@@ -122,20 +122,21 @@ public class SlidingTabLayout extends HorizontalScrollView implements ViewPager.
     private Typeface titleTypeFace2;
 
 
-    public SlidingTabLayout(Context context) {
+    public InterTabLayout(Context context) {
         this(context, null, 0);
     }
 
-    public SlidingTabLayout(Context context, AttributeSet attrs) {
+    public InterTabLayout(Context context, AttributeSet attrs) {
         this(context, attrs, 0);
     }
 
-    public SlidingTabLayout(Context context, AttributeSet attrs, int defStyleAttr) {
+    public InterTabLayout(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
         setFillViewport(true);//设置滚动视图是否可以伸缩其内容以填充视口
         setWillNotDraw(false);//重写onDraw方法,需要调用这个方法来清除flag
         setClipChildren(false);
         setClipToPadding(false);
+        setOverScrollMode(OVER_SCROLL_NEVER);
 
         this.mContext = context;
         mTabsContainer = new LinearLayout(context);
@@ -154,64 +155,64 @@ public class SlidingTabLayout extends HorizontalScrollView implements ViewPager.
     }
 
     private void obtainAttributes(Context context, AttributeSet attrs) {
-        TypedArray ta = context.obtainStyledAttributes(attrs, R.styleable.SlidingTabLayout);
+        TypedArray ta = context.obtainStyledAttributes(attrs, R.styleable.InterTabLayout);
 
-        mIndicatorStyle = ta.getInt(R.styleable.SlidingTabLayout_tl_indicator_style, STYLE_NORMAL);
-        mIndicatorColor = ta.getColor(R.styleable.SlidingTabLayout_tl_indicator_color, Color.parseColor(mIndicatorStyle == STYLE_BLOCK ? "#4B6A87" : "#ffffff"));
-        mIndicatorHeight = ta.getDimension(R.styleable.SlidingTabLayout_tl_indicator_height,
+        mIndicatorStyle = ta.getInt(R.styleable.InterTabLayout_tl_inter_indicator_style, STYLE_NORMAL);
+        mIndicatorColor = ta.getColor(R.styleable.InterTabLayout_tl_inter_indicator_color, Color.parseColor(mIndicatorStyle == STYLE_BLOCK ? "#4B6A87" : "#ffffff"));
+        mIndicatorHeight = ta.getDimension(R.styleable.InterTabLayout_tl_inter_indicator_height,
                 dp2px(mIndicatorStyle == STYLE_TRIANGLE ? 4 : (mIndicatorStyle == STYLE_BLOCK ? -1 : 2)));
-        mIndicatorWidth = ta.getDimension(R.styleable.SlidingTabLayout_tl_indicator_width, dp2px(mIndicatorStyle == STYLE_TRIANGLE ? 10 : -1));
-        mIndicatorCornerRadius = ta.getDimension(R.styleable.SlidingTabLayout_tl_indicator_corner_radius, dp2px(mIndicatorStyle == STYLE_BLOCK ? -1 : 0));
-        mIndicatorMarginLeft = ta.getDimension(R.styleable.SlidingTabLayout_tl_indicator_margin_left, dp2px(0));
-        mIndicatorMarginTop = ta.getDimension(R.styleable.SlidingTabLayout_tl_indicator_margin_top, dp2px(mIndicatorStyle == STYLE_BLOCK ? 7 : 0));
-        mIndicatorMarginRight = ta.getDimension(R.styleable.SlidingTabLayout_tl_indicator_margin_right, dp2px(0));
-        mIndicatorMarginBottom = ta.getDimension(R.styleable.SlidingTabLayout_tl_indicator_margin_bottom, dp2px(mIndicatorStyle == STYLE_BLOCK ? 7 : 0));
-        mIndicatorGravity = ta.getInt(R.styleable.SlidingTabLayout_tl_indicator_gravity, Gravity.BOTTOM);
-        mIndicatorWidthEqualTitle = ta.getBoolean(R.styleable.SlidingTabLayout_tl_indicator_width_equal_title, false);
-        indicatorDrawableRes = ta.getDrawable(R.styleable.SlidingTabLayout_tl_indicator_drawable);
+        mIndicatorWidth = ta.getDimension(R.styleable.InterTabLayout_tl_inter_indicator_width, dp2px(mIndicatorStyle == STYLE_TRIANGLE ? 10 : -1));
+        mIndicatorCornerRadius = ta.getDimension(R.styleable.InterTabLayout_tl_inter_indicator_corner_radius, dp2px(mIndicatorStyle == STYLE_BLOCK ? -1 : 0));
+        mIndicatorMarginLeft = ta.getDimension(R.styleable.InterTabLayout_tl_inter_indicator_margin_left, dp2px(0));
+        mIndicatorMarginTop = ta.getDimension(R.styleable.InterTabLayout_tl_inter_indicator_margin_top, dp2px(mIndicatorStyle == STYLE_BLOCK ? 7 : 0));
+        mIndicatorMarginRight = ta.getDimension(R.styleable.InterTabLayout_tl_inter_indicator_margin_right, dp2px(0));
+        mIndicatorMarginBottom = ta.getDimension(R.styleable.InterTabLayout_tl_inter_indicator_margin_bottom, dp2px(mIndicatorStyle == STYLE_BLOCK ? 7 : 0));
+        mIndicatorGravity = ta.getInt(R.styleable.InterTabLayout_tl_inter_indicator_gravity, Gravity.BOTTOM);
+        mIndicatorWidthEqualTitle = ta.getBoolean(R.styleable.InterTabLayout_tl_inter_indicator_width_equal_title, false);
+        indicatorDrawableRes = ta.getDrawable(R.styleable.InterTabLayout_tl_inter_indicator_drawable);
 
-        mUnderlineColor = ta.getColor(R.styleable.SlidingTabLayout_tl_underline_color, Color.parseColor("#ffffff"));
-        mUnderlineHeight = ta.getDimension(R.styleable.SlidingTabLayout_tl_underline_height, dp2px(0));
-        mUnderlineGravity = ta.getInt(R.styleable.SlidingTabLayout_tl_underline_gravity, Gravity.BOTTOM);
+        mUnderlineColor = ta.getColor(R.styleable.InterTabLayout_tl_inter_underline_color, Color.parseColor("#ffffff"));
+        mUnderlineHeight = ta.getDimension(R.styleable.InterTabLayout_tl_inter_underline_height, dp2px(0));
+        mUnderlineGravity = ta.getInt(R.styleable.InterTabLayout_tl_inter_underline_gravity, Gravity.BOTTOM);
 
-        mDividerColor = ta.getColor(R.styleable.SlidingTabLayout_tl_divider_color, Color.parseColor("#ffffff"));
-        mDividerWidth = ta.getDimension(R.styleable.SlidingTabLayout_tl_divider_width, dp2px(0));
-        mDividerPadding = ta.getDimension(R.styleable.SlidingTabLayout_tl_divider_padding, dp2px(12));
+        mDividerColor = ta.getColor(R.styleable.InterTabLayout_tl_inter_divider_color, Color.parseColor("#ffffff"));
+        mDividerWidth = ta.getDimension(R.styleable.InterTabLayout_tl_inter_divider_width, dp2px(0));
+        mDividerPadding = ta.getDimension(R.styleable.InterTabLayout_tl_inter_divider_padding, dp2px(12));
 
         //title
-//        mTextSize = ta.getDimension(R.styleable.SlidingTabLayout_tl_text_size, sp2px(14));
-        mTextSizeSelect = ta.getDimension(R.styleable.SlidingTabLayout_tl_text_size_select, sp2px(14));
-        mTextSizeUnselect = ta.getDimension(R.styleable.SlidingTabLayout_tl_text_size_unselect, sp2px(14));
-        mTextSelectColor = ta.getColor(R.styleable.SlidingTabLayout_tl_text_select_color, Color.parseColor("#ffffff"));
-        mTextUnselectColor = ta.getColor(R.styleable.SlidingTabLayout_tl_text_unselect_color, Color.parseColor("#AAffffff"));
-        mTextScale = ta.getBoolean(R.styleable.SlidingTabLayout_tl_text_select_scale, false);
-        mTextScaleValue = ta.getFloat(R.styleable.SlidingTabLayout_tl_text_select_scale_value, 1.1f);
-        mTextBold = ta.getInt(R.styleable.SlidingTabLayout_tl_text_bold, TEXT_BOLD_NONE);
-        mTextAllCaps = ta.getBoolean(R.styleable.SlidingTabLayout_tl_text_all_caps, false);
-        textPaddingLeft = ta.getDimensionPixelSize(R.styleable.SlidingTabLayout_tl_text_padding_left, 0);
-        textPaddingTop = ta.getDimensionPixelSize(R.styleable.SlidingTabLayout_tl_text_padding_top, 0);
-        textPaddingRight = ta.getDimensionPixelSize(R.styleable.SlidingTabLayout_tl_text_padding_right, 0);
-        textPaddingBottom = ta.getDimensionPixelSize(R.styleable.SlidingTabLayout_tl_text_padding_bottom, 0);
-        textBackground = ta.getResourceId(R.styleable.SlidingTabLayout_tl_text_background, 0);
+//        mTextSize = ta.getDimension(R.styleable.InterTabLayout_tl_inter_text_size, sp2px(14));
+        mTextSizeSelect = ta.getDimension(R.styleable.InterTabLayout_tl_inter_text_size_select, sp2px(14));
+        mTextSizeUnselect = ta.getDimension(R.styleable.InterTabLayout_tl_inter_text_size_unselect, sp2px(14));
+        mTextSelectColor = ta.getColor(R.styleable.InterTabLayout_tl_inter_text_select_color, Color.parseColor("#ffffff"));
+        mTextUnselectColor = ta.getColor(R.styleable.InterTabLayout_tl_inter_text_unselect_color, Color.parseColor("#AAffffff"));
+        mTextScale = ta.getBoolean(R.styleable.InterTabLayout_tl_inter_text_select_scale, false);
+        mTextScaleValue = ta.getFloat(R.styleable.InterTabLayout_tl_inter_text_select_scale_value, 1.1f);
+        mTextBold = ta.getInt(R.styleable.InterTabLayout_tl_inter_text_bold, TEXT_BOLD_NONE);
+        mTextAllCaps = ta.getBoolean(R.styleable.InterTabLayout_tl_inter_text_all_caps, false);
+        textPaddingLeft = ta.getDimensionPixelSize(R.styleable.InterTabLayout_tl_inter_text_padding_left, 0);
+        textPaddingTop = ta.getDimensionPixelSize(R.styleable.InterTabLayout_tl_inter_text_padding_top, 0);
+        textPaddingRight = ta.getDimensionPixelSize(R.styleable.InterTabLayout_tl_inter_text_padding_right, 0);
+        textPaddingBottom = ta.getDimensionPixelSize(R.styleable.InterTabLayout_tl_inter_text_padding_bottom, 0);
+        textBackground = ta.getResourceId(R.styleable.InterTabLayout_tl_inter_text_background, 0);
 
         //title2
-//        mTextSize2 = ta.getDimension(R.styleable.SlidingTabLayout_tl_text_size2, sp2px(14));
-        mTextSizeSelect2 = ta.getDimension(R.styleable.SlidingTabLayout_tl_text_size_select2, sp2px(14));
-        mTextSizeUnselect2 = ta.getDimension(R.styleable.SlidingTabLayout_tl_text_size_unselect2, sp2px(14));
-        mTextSelectColor2 = ta.getColor(R.styleable.SlidingTabLayout_tl_text_select_color2, Color.parseColor("#ffffff"));
-        mTextUnselectColor2 = ta.getColor(R.styleable.SlidingTabLayout_tl_text_unselect_color2, Color.parseColor("#AAffffff"));
-        mTextBold2 = ta.getInt(R.styleable.SlidingTabLayout_tl_text_bold2, TEXT_BOLD_NONE);
-        mTextAllCaps2 = ta.getBoolean(R.styleable.SlidingTabLayout_tl_text_all_caps2, false);
-        mTextScale2 = ta.getBoolean(R.styleable.SlidingTabLayout_tl_text_select_scale2, false);
-        mTextScaleValue2 = ta.getFloat(R.styleable.SlidingTabLayout_tl_text_select_scale_value2, 1.1f);
-        textPaddingLeft2 = ta.getDimensionPixelSize(R.styleable.SlidingTabLayout_tl_text_padding_left2, 0);
-        textPaddingTop2 = ta.getDimensionPixelSize(R.styleable.SlidingTabLayout_tl_text_padding_top2, 0);
-        textPaddingRight2 = ta.getDimensionPixelSize(R.styleable.SlidingTabLayout_tl_text_padding_right2, 0);
-        textPaddingBottom2 = ta.getDimensionPixelSize(R.styleable.SlidingTabLayout_tl_text_padding_bottom2, 0);
+//        mTextSize2 = ta.getDimension(R.styleable.InterTabLayout_tl_inter_text_size2, sp2px(14));
+        mTextSizeSelect2 = ta.getDimension(R.styleable.InterTabLayout_tl_inter_text_size_select2, sp2px(14));
+        mTextSizeUnselect2 = ta.getDimension(R.styleable.InterTabLayout_tl_inter_text_size_unselect2, sp2px(14));
+        mTextSelectColor2 = ta.getColor(R.styleable.InterTabLayout_tl_inter_text_select_color2, Color.parseColor("#ffffff"));
+        mTextUnselectColor2 = ta.getColor(R.styleable.InterTabLayout_tl_inter_text_unselect_color2, Color.parseColor("#AAffffff"));
+        mTextBold2 = ta.getInt(R.styleable.InterTabLayout_tl_inter_text_bold2, TEXT_BOLD_NONE);
+        mTextAllCaps2 = ta.getBoolean(R.styleable.InterTabLayout_tl_inter_text_all_caps2, false);
+        mTextScale2 = ta.getBoolean(R.styleable.InterTabLayout_tl_inter_text_select_scale2, false);
+        mTextScaleValue2 = ta.getFloat(R.styleable.InterTabLayout_tl_inter_text_select_scale_value2, 1.1f);
+        textPaddingLeft2 = ta.getDimensionPixelSize(R.styleable.InterTabLayout_tl_inter_text_padding_left2, 0);
+        textPaddingTop2 = ta.getDimensionPixelSize(R.styleable.InterTabLayout_tl_inter_text_padding_top2, 0);
+        textPaddingRight2 = ta.getDimensionPixelSize(R.styleable.InterTabLayout_tl_inter_text_padding_right2, 0);
+        textPaddingBottom2 = ta.getDimensionPixelSize(R.styleable.InterTabLayout_tl_inter_text_padding_bottom2, 0);
 
-        mTabSpaceEqual = ta.getBoolean(R.styleable.SlidingTabLayout_tl_tab_space_equal, false);
-        mTabWidth = ta.getDimension(R.styleable.SlidingTabLayout_tl_tab_width, dp2px(-1));
-        mTabPaddingWidth = ta.getDimension(R.styleable.SlidingTabLayout_tl_tab_padding_width, mTabSpaceEqual || mTabWidth > 0 ? dp2px(0) : dp2px(20));
+        mTabSpaceEqual = ta.getBoolean(R.styleable.InterTabLayout_tl_inter_tab_space_equal, false);
+        mTabWidth = ta.getDimension(R.styleable.InterTabLayout_tl_inter_tab_width, dp2px(-1));
+        mTabPaddingWidth = ta.getDimension(R.styleable.InterTabLayout_tl_inter_tab_padding_width, mTabSpaceEqual || mTabWidth > 0 ? dp2px(0) : dp2px(20));
 
         ta.recycle();
     }
@@ -219,7 +220,7 @@ public class SlidingTabLayout extends HorizontalScrollView implements ViewPager.
     /**
      * 关联ViewPager,用于不想在ViewPager适配器中设置titles数据的情况
      */
-    public void setViewPagerTab(ViewPager vp, List<TabTitle> titleList) {
+    public void setViewPagerTab(ViewPager vp, List<InterTabTitle> titleList) {
         if (vp == null || vp.getAdapter() == null) {
             throw new IllegalStateException("ViewPager or ViewPager adapter can not be NULL !");
         }
@@ -243,22 +244,22 @@ public class SlidingTabLayout extends HorizontalScrollView implements ViewPager.
     }
 
     public void setViewPager(ViewPager vp, List<String> titles) {
-        List<TabTitle> list = new ArrayList<>();
+        List<InterTabTitle> list = new ArrayList<>();
         for (String title : titles) {
-            list.add(new TabTitle(title));
+            list.add(new InterTabTitle(title));
         }
         setViewPagerTab(vp, list);
     }
 
     public void setViewPager(ViewPager vp, String[] titles) {
-        List<TabTitle> list = new ArrayList<>();
+        List<InterTabTitle> list = new ArrayList<>();
         for (String title : titles) {
-            list.add(new TabTitle(title));
+            list.add(new InterTabTitle(title));
         }
         setViewPagerTab(vp, list);
     }
 
-    public void updateTitleText(List<TabTitle> titleList) {
+    public void updateTitleText(List<InterTabTitle> titleList) {
         if (titleList == null || titleList.isEmpty() || mTitleList == null || mTabsContainer == null) {
             return;
         }
@@ -272,7 +273,7 @@ public class SlidingTabLayout extends HorizontalScrollView implements ViewPager.
                 TextView textView1 = tabLayout.findViewById(R.id.tv_tab_title);
                 TextView textView2 = tabLayout.findViewById(R.id.tv_tab_title2);
                 if (i < titleList.size()) {
-                    TabTitle title = titleList.get(i);
+                    InterTabTitle title = titleList.get(i);
                     if (title != null) {
                         if (textView1 != null) {
                             if (!TextUtils.isEmpty(title.getTitle1())) {
@@ -310,10 +311,10 @@ public class SlidingTabLayout extends HorizontalScrollView implements ViewPager.
             tabLayout = View.inflate(mContext, R.layout.layout_tab, null);
             String title1, title2;
             if (mTitleList != null && i < mTitleList.size()) {
-                TabTitle tabTitle = mTitleList.get(i);
-                if (tabTitle != null) {
-                    title1 = tabTitle.getTitle1();
-                    title2 = tabTitle.getTitle2();
+                InterTabTitle interTabTitle = mTitleList.get(i);
+                if (interTabTitle != null) {
+                    title1 = interTabTitle.getTitle1();
+                    title2 = interTabTitle.getTitle2();
                 } else {
                     title1 = "";
                     title2 = "";
@@ -333,16 +334,16 @@ public class SlidingTabLayout extends HorizontalScrollView implements ViewPager.
         }
 
         View tabView = View.inflate(mContext, R.layout.layout_tab, null);
-        mTitleList.add(new TabTitle(title));
+        mTitleList.add(new InterTabTitle(title));
 
         if (mTabCount >= mTitleList.size()) {
             mTabCount = mTitleList.size() - 1;
         }
-        TabTitle tabTitle = mTitleList.get(mTabCount);
-        if (tabTitle == null) {
+        InterTabTitle interTabTitle = mTitleList.get(mTabCount);
+        if (interTabTitle == null) {
             addTab(mTabCount, "", "", tabView);
         } else {
-            addTab(mTabCount, tabTitle.getTitle1(), tabTitle.getTitle2(), tabView);
+            addTab(mTabCount, interTabTitle.getTitle1(), interTabTitle.getTitle2(), tabView);
         }
         this.mTabCount = mTitleList.size();
         updateTabStyles();
@@ -975,9 +976,9 @@ public class SlidingTabLayout extends HorizontalScrollView implements ViewPager.
         }
 
         View tabView = mTabsContainer.getChildAt(position);
-        MsgView tipView = (MsgView) tabView.findViewById(R.id.rtv_msg_tip);
+        InterMsgView tipView = (InterMsgView) tabView.findViewById(R.id.rtv_msg_tip);
         if (tipView != null) {
-            UnreadMsgUtils.show(tipView, num);
+            InterMsgUtils.show(tipView, num);
 
             if (mInitSetMap.get(position)) {
                 return;
@@ -1009,7 +1010,7 @@ public class SlidingTabLayout extends HorizontalScrollView implements ViewPager.
         }
 
         View tabView = mTabsContainer.getChildAt(position);
-        MsgView tipView = (MsgView) tabView.findViewById(R.id.rtv_msg_tip);
+        InterMsgView tipView = (InterMsgView) tabView.findViewById(R.id.rtv_msg_tip);
         if (tipView != null) {
             tipView.setVisibility(View.GONE);
         }
@@ -1023,7 +1024,7 @@ public class SlidingTabLayout extends HorizontalScrollView implements ViewPager.
             position = mTabCount - 1;
         }
         View tabView = mTabsContainer.getChildAt(position);
-        MsgView tipView = (MsgView) tabView.findViewById(R.id.rtv_msg_tip);
+        InterMsgView tipView = (InterMsgView) tabView.findViewById(R.id.rtv_msg_tip);
         if (tipView != null) {
             TextView tv_tab_title = (TextView) tabView.findViewById(R.id.tv_tab_title);
             mTextPaint.setTextSize(mTextSizeUnselect);
@@ -1039,12 +1040,12 @@ public class SlidingTabLayout extends HorizontalScrollView implements ViewPager.
     /**
      * 当前类只提供了少许设置未读消息属性的方法,可以通过该方法获取MsgView对象从而各种设置
      */
-    public MsgView getMsgView(int position) {
+    public InterMsgView getMsgView(int position) {
         if (position >= mTabCount) {
             position = mTabCount - 1;
         }
         View tabView = mTabsContainer.getChildAt(position);
-        return (MsgView) tabView.findViewById(R.id.rtv_msg_tip);
+        return (InterMsgView) tabView.findViewById(R.id.rtv_msg_tip);
     }
 
     private OnTabSelectListener mListener;
