@@ -14,7 +14,7 @@ rootProject.ext {
             appcompat            : 'androidx.appcompat:appcompat:1.2.0',
             material             : 'com.google.android.material:material:1.2.0',
             constraintlayout     : 'androidx.constraintlayout:constraintlayout:1.1.0',
-            okhttp               : 'com.squareup.okhttp3:okhttp:4.9.1',
+            okhttp               : 'com.squareup.okhttp3:okhttp:3.12.0',
             rxhttp               : 'com.github.liujingxing.rxhttp:rxhttp:2.8.3',
             rxhttp_compiler      : 'com.github.liujingxing.rxhttp:rxhttp-compiler:2.8.3',
             rxjava3              : 'io.reactivex.rxjava3:rxjava:3.1.1',

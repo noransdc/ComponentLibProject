@@ -22,6 +22,7 @@ import java.util.Random;
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
 import io.reactivex.rxjava3.functions.Consumer;
 import io.reactivex.rxjava3.schedulers.Schedulers;
+import okhttp3.OkHttpClient;
 import rxhttp.wrapper.param.RxHttp;
 
 /**
@@ -50,19 +51,7 @@ public class TestActivity extends AppCompatActivity {
         clickBtn = findViewById(R.id.btn_click);
 
 
-        RxHttp.get("http://www.google.com")
-                .add("name", "zhangsan")
-                .asParser(new DataParser<String>(){})
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(data -> {
-                    Log.w("http success", data);
-                }, new Consumer<Throwable>() {
-                    @Override
-                    public void accept(Throwable throwable) throws Throwable {
-                        Log.w("http failed", throwable.getMessage());
-                    }
-                });
+
 
 
         initViewPager();
@@ -81,12 +70,29 @@ public class TestActivity extends AppCompatActivity {
         });
 
         findViewById(R.id.btn_tab).setOnClickListener(v -> {
-            tabLayout.setIndicatorDrawable(getDrawable(R.drawable.ia_corner_orange_fe5e00_22));
+//            tabLayout.setIndicatorDrawable(getDrawable(R.drawable.ia_corner_orange_fe5e00_22));
+
+
+            test();
         });
 
     }
 
     private void test(){
+        RxHttp.get("http://13.212.18.206:5222/test/test/getUrl")
+                .addHeader("pch", "xiaoenlaile")
+                .add("username", "JJBX")
+                .asParser(new DataParser<String>(){})
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(data -> {
+                    Log.w("http success", data);
+                }, new Consumer<Throwable>() {
+                    @Override
+                    public void accept(Throwable throwable) throws Throwable {
+                        Log.w("http failed", throwable.getMessage());
+                    }
+                });
 
     }
 

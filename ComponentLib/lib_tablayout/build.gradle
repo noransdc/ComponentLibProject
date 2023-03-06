@@ -37,7 +37,7 @@ dependencies {
 
 uploadArchives {
     repositories.mavenDeployer {
-        def versionName = "1.1.3-SNAPSHOT"
+        def versionName = "1.1.4-SNAPSHOT"
 //        def versionName = "1.0.2"
         def url
         if (versionName.toUpperCase().contains("SNAPSHOT")) {
