@@ -21,7 +21,7 @@ import rxhttp.wrapper.exception.HttpStatusCodeException;
  * @author Nevio
  * on 2022/2/2
  */
-class ExceptionUtil {
+public class ExceptionUtil {
 
 
     /**

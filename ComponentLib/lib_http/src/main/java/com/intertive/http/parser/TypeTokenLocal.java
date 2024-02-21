@@ -45,7 +45,7 @@ import java.util.Map;
  * @author Sven Mawson
  * @author Jesse Wilson
  */
-class TypeTokenLocal<T> {
+public class TypeTokenLocal<T> {
     final Class<? super T> rawType;
     final Type type;
     final int hashCode;
