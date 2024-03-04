@@ -67,7 +67,7 @@ public class ExceptionUtil {
                     if (!TextUtils.isEmpty(msg)){
                         httpException.setErrorMsg(msg);
                     } else {
-                        httpException.setErrorMsg("网络错误");
+                        httpException.setErrorMsg(ErrorCons.MSG_NETWORK_ERROR);
                     }
                     break;
             }
@@ -77,46 +77,30 @@ public class ExceptionUtil {
             int code = serverException.getCode();
             String message = serverException.getMessage();
             httpException = new CustomException(code, serverException);
-            switch (code) {
-//                case ErrorCons.CODE_TOKEN_INVALID:
-//                    httpException.setErrorMsg("token失效");
-                    //下面这里可以统一处理跳转登录页面的操作逻辑
-//                    break;
-                case ErrorCons.CODE_NO_OTHER:
-                    httpException.setErrorMsg("其他情况");
-                    break;
-                case ErrorCons.CODE_SHOW_TOAST:
-                    httpException.setErrorMsg("吐司");
-                    break;
-                case ErrorCons.CODE_NO_MISSING_PARAMETER:
-                    httpException.setErrorMsg("缺少参数");
-                    break;
-                default:
-                    httpException.setErrorMsg(message);
-                    break;
-            }
+            httpException.setErrorMsg(message);
+
         } else if (e instanceof JsonParseException
                 || e instanceof JSONException
                 || e instanceof ParseException) {
             httpException = new CustomException(ErrorCons.PARSE_ERROR, e);
             //均视为解析错误
-            httpException.setErrorMsg("解析错误");
+            httpException.setErrorMsg(ErrorCons.MSG_PARSE_ERROR);
         } else if (e instanceof ConnectException) {
             httpException = new CustomException(ErrorCons.NETWORK_ERROR, e);
             //均视为网络错误
-            httpException.setErrorMsg("连接失败");
+            httpException.setErrorMsg(ErrorCons.MSG_CONNECTION_FAILED);
         } else if (e instanceof java.net.UnknownHostException) {
             httpException = new CustomException(ErrorCons.NETWORK_ERROR, e);
             //网络未连接
-            httpException.setErrorMsg("网络未连接");
+            httpException.setErrorMsg(ErrorCons.MSG_NETWORK_NOT_CONNECTED);
         } else if (e instanceof SocketTimeoutException) {
             httpException = new CustomException(ErrorCons.NETWORK_ERROR, e);
             //网络未连接
-            httpException.setErrorMsg("服务器响应超时");
+            httpException.setErrorMsg(ErrorCons.MSG_SERVER_RESPONSE_TIMEOUT);
         } else {
             httpException = new CustomException(ErrorCons.UNKNOWN, e);
             //未知错误
-            httpException.setErrorMsg("未知错误");
+            httpException.setErrorMsg(ErrorCons.MSG_UNKNOWN);
         }
 
         return httpException;

@@ -24,7 +24,7 @@ public abstract class LiveDataObserver<T> implements Observer<DataRes<T>> {
                 onFailed(res.getCode(), res.getMsg());
             }
         } else {
-            onFailed(-1, "未获取到数据");
+            onFailed(-1, ErrorCons.MSG_NO_DATA);
         }
     }
 

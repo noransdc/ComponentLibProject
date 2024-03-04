@@ -25,7 +25,6 @@ public class ErrorCons {
     public static final int UNKNOWN = 1500;
     public static final int NETWORK_ERROR = 1501;
     public static final int PARSE_ERROR = 1502;
-    public static final int SERVER_ERROR = 1503;
     public static final int HTTP_ERROR = 1504;
     public static final int JSON_ERROR = 1505;
 
@@ -52,6 +51,13 @@ public class ErrorCons {
 
 
 
-    public static final String MSG_UNKNOWN = "UNKNOWN";
+    public static final String MSG_UNKNOWN = "Unknown Error";
+
+    public static final String MSG_NETWORK_ERROR = "Network error";
+    public static final String MSG_PARSE_ERROR = "Parse error";
+    public static final String MSG_CONNECTION_FAILED = "Connection failed";
+    public static final String MSG_NETWORK_NOT_CONNECTED = "Network not connected";
+    public static final String MSG_SERVER_RESPONSE_TIMEOUT = "Server response timeout";
+    public static final String MSG_NO_DATA = "No Data";
 
 }

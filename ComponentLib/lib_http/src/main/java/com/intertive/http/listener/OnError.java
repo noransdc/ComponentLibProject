@@ -36,7 +36,7 @@ interface OnError<T extends Throwable> extends Consumer<T> {
             msg = t.getMessage();
         }
         if (TextUtils.isEmpty(msg)) {
-            msg = "OnError 未知异常";
+            msg = ErrorCons.MSG_UNKNOWN;
         }
         onError(new ErrorInfo(code, msg));
     }
