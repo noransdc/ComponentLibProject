@@ -27,11 +27,12 @@ public class ErrorCons {
     public static final int PARSE_ERROR = 1502;
     public static final int HTTP_ERROR = 1504;
     public static final int JSON_ERROR = 1505;
+    public static final int CODE_TYPE_ERROR = 1506;
 
     /**
      * 完全成功
      */
-    public static int CODE_SUCCESS = 200;
+    public static int CODE_SUCCESS = 0;
     /**
      * Token 失效
      */
@@ -59,5 +60,6 @@ public class ErrorCons {
     public static final String MSG_NETWORK_NOT_CONNECTED = "Network not connected";
     public static final String MSG_SERVER_RESPONSE_TIMEOUT = "Server response timeout";
     public static final String MSG_NO_DATA = "No Data";
+    public static final String MSG_CODE_TYPE_ERROR = "CODE_TYPE_ERROR";
 
 }

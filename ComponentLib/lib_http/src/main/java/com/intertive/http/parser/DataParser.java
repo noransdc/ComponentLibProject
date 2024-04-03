@@ -1,6 +1,8 @@
 package com.intertive.http.parser;
 
 
+import android.text.TextUtils;
+
 import androidx.annotation.NonNull;
 
 import com.google.gson.Gson;
@@ -39,26 +41,47 @@ public class DataParser<T> extends TypeParser<T> {
 
                 int code = ErrorCons.UNKNOWN;
                 String msg = ErrorCons.MSG_UNKNOWN;
-                String dataJson;
+                String dataJson = null;
 
                 try {
                     JSONObject jsonObject = new JSONObject(json);
-                    if (jsonObject.has("code")){
-                        code = jsonObject.getInt("code");
-                    }
-                    if (jsonObject.has("msg")){
-                        msg = jsonObject.getString("msg");
-                    }
-                    if (jsonObject.has("data")){
-                        dataJson = jsonObject.getString("data");
-                        if ("[]".equals(dataJson)){
-                            json = json.replace("\"data\":[]", "\"data\":{}");
+
+                    if (jsonObject.has("head")){
+                        JSONObject head = jsonObject.getJSONObject("head");
+                        code = ParseUtil.parseInt(head.getString("errCode"));
+                        msg = head.getString("errMsg");
+                        dataJson = jsonObject.getString("body");
+
+                    } else if (jsonObject.has("resultCode")){
+                        String resultCode = jsonObject.getString("resultCode");
+                        code = ParseUtil.parseInt(resultCode);
+                        msg = jsonObject.getString("resultDesc");
+                        dataJson = jsonObject.getString("body");
+
+                    } else {
+                        if (jsonObject.has("code")){
+                            code = jsonObject.getInt("code");
                         }
+                        if (jsonObject.has("msg")){
+                            msg = jsonObject.getString("msg");
+                        }
+                        if (jsonObject.has("data")){
+                            dataJson = jsonObject.getString("data");
+                        }
+
+                    }
+
+                    if ("[]".equals(dataJson)){
+                        json = json.replace("\"data\":[]", "\"data\":{}");
                     }
 
                 } catch (Exception e) {
                     response.close();
                     throw ExceptionUtil.serverException(ErrorCons.JSON_ERROR, e.getMessage());
+                }
+
+                if (code == ErrorCons.CODE_TYPE_ERROR){
+                    msg = ErrorCons.MSG_CODE_TYPE_ERROR;
                 }
 
                 if (code != ErrorCons.CODE_SUCCESS) {//code不等于200，说明数据不正确，抛出异常
