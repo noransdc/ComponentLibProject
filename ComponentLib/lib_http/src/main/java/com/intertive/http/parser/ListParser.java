@@ -58,10 +58,9 @@ public class ListParser<T> extends TypeParser<List<T>> {
                         msg = jsonObject.getString("resultDesc");
                         dataJson = jsonObject.getString("body");
 
-                    } else {
-                        if (jsonObject.has("code")){
-                            code = jsonObject.getInt("code");
-                        }
+                    } else if (jsonObject.has("code")){
+                        code = jsonObject.getInt("code");
+
                         if (jsonObject.has("msg")){
                             msg = jsonObject.getString("msg");
                         }
@@ -69,10 +68,12 @@ public class ListParser<T> extends TypeParser<List<T>> {
                             dataJson = jsonObject.getString("data");
                         }
 
+                    } else {
+                        dataJson = json;
                     }
 
-                    if ("[]".equals(dataJson)){
-                        dataJson = dataJson.replace("\"data\":[]", "\"data\":{}");
+                    if ("{}".equals(dataJson)){
+                        dataJson = dataJson.replace("\"data\":{}", "\"data\":[]");
                     }
 
                     data = gson.fromJson(dataJson, new TypeToken<List<T>>(){}.getType());
@@ -94,7 +95,7 @@ public class ListParser<T> extends TypeParser<List<T>> {
             }
 
             if (data == null){
-                data = gson.fromJson("[]", List.class);
+                data = gson.fromJson("[]", new TypeToken<List<T>>(){}.getType());
             }
 
             return data;

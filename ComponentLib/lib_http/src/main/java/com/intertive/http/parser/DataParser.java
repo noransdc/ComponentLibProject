@@ -58,10 +58,9 @@ public class DataParser<T> extends TypeParser<T> {
                         msg = jsonObject.getString("resultDesc");
                         dataJson = jsonObject.getString("body");
 
-                    } else {
-                        if (jsonObject.has("code")){
-                            code = jsonObject.getInt("code");
-                        }
+                    } else if (jsonObject.has("code")){
+                        code = jsonObject.getInt("code");
+
                         if (jsonObject.has("msg")){
                             msg = jsonObject.getString("msg");
                         }
@@ -69,6 +68,8 @@ public class DataParser<T> extends TypeParser<T> {
                             dataJson = jsonObject.getString("data");
                         }
 
+                    } else {
+                        dataJson = json;
                     }
 
                     if ("[]".equals(dataJson)){
