@@ -32,7 +32,7 @@ public class DataParser<T> extends TypeParser<T> {
         int httpCode = response.code();
         if (httpCode >= 200 && httpCode < 300){
             Type dataType = TypeTokenLocal.getSuperclassTypeParameter(this.getClass());
-            final Type type = ParameterizedTypeImpl.get(DataRes.class, dataType); //获取泛型类型
+//            final Type type = ParameterizedTypeImpl.get(DataRes.class, dataType); //获取泛型类型
             ResponseBody responseBody = response.body();
             T data = null;
             Gson gson = new Gson();
@@ -75,7 +75,7 @@ public class DataParser<T> extends TypeParser<T> {
                         dataJson = dataJson.replace("\"data\":[]", "\"data\":{}");
                     }
 
-                    data = gson.fromJson(dataJson, type);
+                    data = gson.fromJson(dataJson, dataType);
 
                 } catch (Exception e) {
                     response.close();
