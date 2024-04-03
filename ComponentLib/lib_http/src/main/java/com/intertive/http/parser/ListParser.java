@@ -4,6 +4,7 @@ package com.intertive.http.parser;
 import androidx.annotation.NonNull;
 
 import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 import com.intertive.http.ErrorCons;
 import com.intertive.http.model.DataListRes;
 
@@ -30,8 +31,8 @@ public class ListParser<T> extends TypeParser<List<T>> {
     public List<T> onParse(@NonNull Response response) throws IOException {
         int httpCode = response.code();
         if (httpCode >= 200 && httpCode < 300){
-            Type dataType = TypeTokenLocal.getSuperclassTypeParameter(this.getClass());
-            final Type type = ParameterizedTypeImpl.get(DataListRes.class, dataType); //获取泛型类型
+//            Type dataType = TypeTokenLocal.getSuperclassTypeParameter(this.getClass());
+//            final Type type = ParameterizedTypeImpl.get(DataListRes.class, dataType); //获取泛型类型
             ResponseBody responseBody = response.body();
             List<T> data = null;
             Gson gson = new Gson();
@@ -71,8 +72,10 @@ public class ListParser<T> extends TypeParser<List<T>> {
                     }
 
                     if ("[]".equals(dataJson)){
-                        json = json.replace("\"data\":[]", "\"data\":{}");
+                        dataJson = dataJson.replace("\"data\":[]", "\"data\":{}");
                     }
+
+                    data = gson.fromJson(dataJson, new TypeToken<List<T>>(){}.getType());
 
                 } catch (Exception e) {
                     response.close();
@@ -87,9 +90,6 @@ public class ListParser<T> extends TypeParser<List<T>> {
                     response.close();
                     throw ExceptionUtil.serverException(code, msg);
                 }
-
-                DataListRes<T> dataListRes = gson.fromJson(json, type);
-                data = dataListRes.getData(); //获取data字段
 
             }
 

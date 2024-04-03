@@ -72,8 +72,10 @@ public class DataParser<T> extends TypeParser<T> {
                     }
 
                     if ("[]".equals(dataJson)){
-                        json = json.replace("\"data\":[]", "\"data\":{}");
+                        dataJson = dataJson.replace("\"data\":[]", "\"data\":{}");
                     }
+
+                    data = gson.fromJson(dataJson, type);
 
                 } catch (Exception e) {
                     response.close();
@@ -88,9 +90,6 @@ public class DataParser<T> extends TypeParser<T> {
                     response.close();
                     throw ExceptionUtil.serverException(code, msg);
                 }
-
-                DataRes<T> dataRes = gson.fromJson(json, type);
-                data = dataRes.getData(); //获取data字段
 
             }
 
