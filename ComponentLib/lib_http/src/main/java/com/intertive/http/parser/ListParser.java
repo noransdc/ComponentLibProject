@@ -4,14 +4,19 @@ package com.intertive.http.parser;
 import androidx.annotation.NonNull;
 
 import com.google.gson.Gson;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonParser;
 import com.google.gson.reflect.TypeToken;
 import com.intertive.http.ErrorCons;
 import com.intertive.http.model.DataListRes;
 
+import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.io.IOException;
 import java.lang.reflect.Type;
+import java.util.ArrayList;
 import java.util.List;
 
 import okhttp3.Response;
@@ -31,10 +36,10 @@ public class ListParser<T> extends TypeParser<List<T>> {
     public List<T> onParse(@NonNull Response response) throws IOException {
         int httpCode = response.code();
         if (httpCode >= 200 && httpCode < 300){
-//            Type dataType = TypeTokenLocal.getSuperclassTypeParameter(this.getClass());
+            Type dataType = TypeTokenLocal.getSuperclassTypeParameter(this.getClass());
 //            final Type type = ParameterizedTypeImpl.get(DataListRes.class, dataType); //获取泛型类型
             ResponseBody responseBody = response.body();
-            List<T> data = null;
+            List<T> data = new ArrayList<>();
             Gson gson = new Gson();
             if (responseBody != null){
                 String json = responseBody.string();
@@ -72,11 +77,24 @@ public class ListParser<T> extends TypeParser<List<T>> {
                         dataJson = json;
                     }
 
-                    if ("{}".equals(dataJson)){
-                        dataJson = dataJson.replace("\"data\":{}", "\"data\":[]");
+//                    if ("{}".equals(dataJson)){
+//                        dataJson = dataJson.replace("\"data\":{}", "\"data\":[]");
+//                    }
+
+                    if (dataJson == null){
+                        dataJson = "[]";
                     }
 
-                    data = gson.fromJson(dataJson, new TypeToken<List<T>>(){}.getType());
+                    JsonElement jsonElement = JsonParser.parseString(dataJson);
+                    if (jsonElement.isJsonArray()){
+                        JsonArray jsonArray = jsonElement.getAsJsonArray();
+                        for (JsonElement element : jsonArray) {
+                            T t = gson.fromJson(element, dataType);
+                            if (t != null){
+                                data.add(t);
+                            }
+                        }
+                    }
 
                 } catch (Exception e) {
                     response.close();
@@ -94,9 +112,9 @@ public class ListParser<T> extends TypeParser<List<T>> {
 
             }
 
-            if (data == null){
-                data = gson.fromJson("[]", new TypeToken<List<T>>(){}.getType());
-            }
+//            if (data == null){
+//                data = gson.fromJson("[]", new TypeToken<List<T>>(){}.getType());
+//            }
 
             return data;
 
