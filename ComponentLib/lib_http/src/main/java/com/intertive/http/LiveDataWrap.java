@@ -16,14 +16,14 @@ public class LiveDataWrap<T> extends MutableLiveData<DataRes<T>> {
         DataRes<T> res = new DataRes<>();
         res.setCode(200);
         res.setData(data);
-        setValue(res);
+        postValue(res);
     }
 
     public void setError(int code, String msg){
         DataRes<T> res = new DataRes<>();
         res.setCode(code);
         res.setMsg(msg);
-        setValue(res);
+        postValue(res);
     }
 
     public void setData(T data, Object tag){
@@ -31,7 +31,7 @@ public class LiveDataWrap<T> extends MutableLiveData<DataRes<T>> {
         res.setCode(200);
         res.setData(data);
         res.setTag(tag);
-        setValue(res);
+        postValue(res);
     }
 
     public void setError(int code, String msg, Object tag){
@@ -39,6 +39,6 @@ public class LiveDataWrap<T> extends MutableLiveData<DataRes<T>> {
         res.setCode(code);
         res.setMsg(msg);
         res.setTag(tag);
-        setValue(res);
+        postValue(res);
     }
 }
