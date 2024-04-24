@@ -16,14 +16,7 @@ public class LiveDataWrap<T> extends MutableLiveData<DataRes<T>> {
         DataRes<T> res = new DataRes<>();
         res.setCode(200);
         res.setData(data);
-        postValue(res);
-    }
-
-    public void setError(int code, String msg){
-        DataRes<T> res = new DataRes<>();
-        res.setCode(code);
-        res.setMsg(msg);
-        postValue(res);
+        setValue(res);
     }
 
     public void setData(T data, Object tag){
@@ -31,7 +24,29 @@ public class LiveDataWrap<T> extends MutableLiveData<DataRes<T>> {
         res.setCode(200);
         res.setData(data);
         res.setTag(tag);
+        setValue(res);
+    }
+
+    public void postData(T data){
+        DataRes<T> res = new DataRes<>();
+        res.setCode(200);
+        res.setData(data);
         postValue(res);
+    }
+
+    public void postData(T data, Object tag){
+        DataRes<T> res = new DataRes<>();
+        res.setCode(200);
+        res.setData(data);
+        res.setTag(tag);
+        postValue(res);
+    }
+
+    public void setError(int code, String msg){
+        DataRes<T> res = new DataRes<>();
+        res.setCode(code);
+        res.setMsg(msg);
+        setValue(res);
     }
 
     public void setError(int code, String msg, Object tag){
@@ -39,6 +54,22 @@ public class LiveDataWrap<T> extends MutableLiveData<DataRes<T>> {
         res.setCode(code);
         res.setMsg(msg);
         res.setTag(tag);
+        setValue(res);
+    }
+
+    public void postError(int code, String msg){
+        DataRes<T> res = new DataRes<>();
+        res.setCode(code);
+        res.setMsg(msg);
         postValue(res);
     }
+
+    public void postError(int code, String msg, Object tag){
+        DataRes<T> res = new DataRes<>();
+        res.setCode(code);
+        res.setMsg(msg);
+        res.setTag(tag);
+        postValue(res);
+    }
+    
 }
