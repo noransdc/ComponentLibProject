@@ -6,7 +6,7 @@ import java.util.List;
  * @author Nevio
  * on 2022/2/2
  */
-public class DataListRes<T> {
+public class ListRsp<T> {
 
     private int code;
     private String msg;

@@ -11,41 +11,51 @@ import java.io.IOException;
 public class CustomException extends IOException {
 
 
-    private int errorCode;
-    private String errorMsg;
+    private String code;
+    private String msg;
+    public Object dataObj;
 
 
-    public CustomException(int code, String msg, Throwable cause){
+    public CustomException(String code, String msg, Throwable cause){
         super(msg, cause);
-        this.errorCode = code;
-        this.errorMsg = msg;
+        this.code = code;
+        this.msg = msg;
     }
 
-    public CustomException(int code, @NonNull Throwable cause){
+    public CustomException(String code, @NonNull Throwable cause){
         this(code, cause.getMessage(), cause);
     }
 
-    public int getErrorCode() {
-        return errorCode;
+    public String getCode() {
+        return code;
     }
 
-    public void setErrorCode(int errorCode) {
-        this.errorCode = errorCode;
+    public void setCode(String code) {
+        this.code = code;
     }
 
-    public String getErrorMsg() {
-        return errorMsg;
+    public String getMsg() {
+        return msg;
     }
 
-    public void setErrorMsg(String errorMsg) {
-        this.errorMsg = errorMsg;
+    public void setMsg(String msg) {
+        this.msg = msg;
+    }
+
+    public Object getDataObj() {
+        return dataObj;
+    }
+
+    public void setDataObj(Object dataObj) {
+        this.dataObj = dataObj;
     }
 
     @Override
     public String toString() {
         return "CustomException{" +
-                "errorCode=" + errorCode +
-                ", errorMsg='" + errorMsg + '\'' +
+                "code='" + code + '\'' +
+                ", msg='" + msg + '\'' +
+                ", dataObj=" + dataObj +
                 '}';
     }
 }

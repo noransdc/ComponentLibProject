@@ -29,10 +29,11 @@ public class ExceptionUtil {
      *
      * @param code 自定义的code码
      */
-    public static CustomException serverException(int code, String msg) {
+    public static CustomException postServerException(String code, String msg, Object dataObj) {
         ServerException serverException = new ServerException();
         serverException.setCode(code);
         serverException.setMessage(msg);
+        serverException.setDataObj(dataObj);
         return handleException(serverException);
     }
 
@@ -42,68 +43,54 @@ public class ExceptionUtil {
      * @param e e异常
      */
     public static CustomException handleException(Throwable e) {
-        CustomException httpException;
+        CustomException customException;
         //HTTP错误   网络请求异常 比如常见404 500之类的等
         if (e instanceof HttpStatusCodeException) {
-            HttpStatusCodeException codeException = (HttpStatusCodeException) e;
-            httpException = new CustomException(codeException.getStatusCode(), codeException);
-            int statusCode = codeException.getStatusCode();
-            switch (statusCode) {
-                case ErrorCons.BAD_REQUEST:
-                case ErrorCons.UNAUTHORIZED:
-                case ErrorCons.FORBIDDEN:
-                case ErrorCons.NOT_FOUND:
-                case ErrorCons.METHOD_NOT_ALLOWED:
-                case ErrorCons.REQUEST_TIMEOUT:
-                case ErrorCons.CONFLICT:
-                case ErrorCons.PRECONDITION_FAILED:
-                case ErrorCons.GATEWAY_TIMEOUT:
-                case ErrorCons.INTERNAL_SERVER_ERROR:
-                case ErrorCons.BAD_GATEWAY:
-                case ErrorCons.SERVICE_UNAVAILABLE:
-                default:
-                    //均视为网络错误
-                    String msg = codeException.getMessage();
-                    if (!TextUtils.isEmpty(msg)){
-                        httpException.setErrorMsg(msg);
-                    } else {
-                        httpException.setErrorMsg(ErrorCons.MSG_NETWORK_ERROR);
-                    }
-                    break;
+            HttpStatusCodeException httpException = (HttpStatusCodeException) e;
+            customException = new CustomException(String.valueOf(httpException.getStatusCode()), httpException);
+
+            //均视为网络错误
+            String msg = httpException.getMessage();
+            if (!TextUtils.isEmpty(msg)){
+                customException.setMsg(msg);
+            } else {
+                customException.setMsg(ErrorCons.MSG_NETWORK_ERROR);
             }
+
         } else if (e instanceof ServerException) {
             //服务器返回的错误
             ServerException serverException = (ServerException) e;
-            int code = serverException.getCode();
+            String code = serverException.getCode();
             String message = serverException.getMessage();
-            httpException = new CustomException(code, serverException);
-            httpException.setErrorMsg(message);
+            customException = new CustomException(code, serverException);
+            customException.setMsg(message);
+            customException.setDataObj(serverException.getDataObj());
 
         } else if (e instanceof JsonParseException
                 || e instanceof JSONException
                 || e instanceof ParseException) {
-            httpException = new CustomException(ErrorCons.PARSE_ERROR, e);
+            customException = new CustomException(ErrorCons.PARSE_ERROR, e);
             //均视为解析错误
-            httpException.setErrorMsg(ErrorCons.MSG_PARSE_ERROR);
+            customException.setMsg(ErrorCons.MSG_PARSE_ERROR);
         } else if (e instanceof ConnectException) {
-            httpException = new CustomException(ErrorCons.NETWORK_ERROR, e);
+            customException = new CustomException(ErrorCons.NETWORK_ERROR, e);
             //均视为网络错误
-            httpException.setErrorMsg(ErrorCons.MSG_CONNECTION_FAILED);
+            customException.setMsg(ErrorCons.MSG_CONNECTION_FAILED);
         } else if (e instanceof java.net.UnknownHostException) {
-            httpException = new CustomException(ErrorCons.NETWORK_ERROR, e);
+            customException = new CustomException(ErrorCons.NETWORK_ERROR, e);
             //网络未连接
-            httpException.setErrorMsg(ErrorCons.MSG_NETWORK_NOT_CONNECTED);
+            customException.setMsg(ErrorCons.MSG_NETWORK_NOT_CONNECTED);
         } else if (e instanceof SocketTimeoutException) {
-            httpException = new CustomException(ErrorCons.NETWORK_ERROR, e);
+            customException = new CustomException(ErrorCons.NETWORK_ERROR, e);
             //网络未连接
-            httpException.setErrorMsg(ErrorCons.MSG_SERVER_RESPONSE_TIMEOUT);
+            customException.setMsg(ErrorCons.MSG_SERVER_RESPONSE_TIMEOUT);
         } else {
-            httpException = new CustomException(ErrorCons.UNKNOWN, e);
+            customException = new CustomException(ErrorCons.UNKNOWN, e);
             //未知错误
-            httpException.setErrorMsg(ErrorCons.MSG_UNKNOWN);
+            customException.setMsg(ErrorCons.MSG_UNKNOWN);
         }
 
-        return httpException;
+        return customException;
     }
 
 

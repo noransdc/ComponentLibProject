@@ -15,20 +15,22 @@ import rxhttp.wrapper.exception.HttpStatusCodeException;
  * @author Nevio
  * on 2022/2/1
  */
-interface OnError<T extends Throwable> extends Consumer<T> {
+public interface OnError<T extends Throwable> extends Consumer<T> {
 
 
     @Override
-    default void accept(T t) throws Throwable {
-        int code;
+    default void accept(T t) {
+        String code;
         String msg;
+        Object obj = null;
         if (t instanceof CustomException) {
             CustomException exception = (CustomException) t;
-            code = exception.getErrorCode();
-            msg = exception.getErrorMsg();
+            code = exception.getCode();
+            msg = exception.getMsg();
+            obj = exception.getDataObj();
         } else if (t instanceof HttpStatusCodeException) {
             HttpStatusCodeException exception = (HttpStatusCodeException) t;
-            code = exception.getStatusCode();
+            code = String.valueOf(exception.getStatusCode());
             msg = exception.getResult();
 
         } else {
@@ -38,7 +40,7 @@ interface OnError<T extends Throwable> extends Consumer<T> {
         if (TextUtils.isEmpty(msg)) {
             msg = ErrorCons.MSG_UNKNOWN;
         }
-        onError(new ErrorInfo(code, msg));
+        onError(new ErrorInfo(code, msg, obj));
     }
 
     void onError(ErrorInfo err);

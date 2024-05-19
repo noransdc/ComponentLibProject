@@ -9,9 +9,7 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonParser;
 import com.google.gson.reflect.TypeToken;
 import com.intertive.http.ErrorCons;
-import com.intertive.http.model.DataListRes;
 
-import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.io.IOException;
@@ -21,7 +19,6 @@ import java.util.List;
 
 import okhttp3.Response;
 import okhttp3.ResponseBody;
-import rxhttp.wrapper.entity.ParameterizedTypeImpl;
 import rxhttp.wrapper.exception.HttpStatusCodeException;
 import rxhttp.wrapper.parse.TypeParser;
 
@@ -35,92 +32,93 @@ public class ListParser<T> extends TypeParser<List<T>> {
     @Override
     public List<T> onParse(@NonNull Response response) throws IOException {
         int httpCode = response.code();
-        if (httpCode >= 200 && httpCode < 300){
-            Type dataType = TypeTokenLocal.getSuperclassTypeParameter(this.getClass());
+
+        if (httpCode < 200 || httpCode >= 300){
+            throw ExceptionUtil.handleException(new HttpStatusCodeException(response));
+        }
+
+        Type dataType = TypeTokenLocal.getSuperclassTypeParameter(this.getClass());
 //            final Type type = ParameterizedTypeImpl.get(DataListRes.class, dataType); //获取泛型类型
-            ResponseBody responseBody = response.body();
-            List<T> data = new ArrayList<>();
-            Gson gson = new Gson();
-            if (responseBody != null){
-                String json = responseBody.string();
+        ResponseBody responseBody = response.body();
+        List<T> data = new ArrayList<>();
+        Gson gson = new Gson();
+        if (responseBody != null){
+            String json = responseBody.string();
 
-                int code = ErrorCons.UNKNOWN;
-                String msg = ErrorCons.MSG_UNKNOWN;
-                String dataJson = null;
+            String code = ErrorCons.UNKNOWN;
+            String msg = ErrorCons.MSG_UNKNOWN;
+            String dataJson = null;
 
-                try {
-                    JSONObject jsonObject = new JSONObject(json);
+            try {
+                JSONObject jsonObject = new JSONObject(json);
 
-                    if (jsonObject.has("head")){
-                        JSONObject head = jsonObject.getJSONObject("head");
-                        code = ParseUtil.parseInt(head.getString("errCode"));
-                        msg = head.getString("errMsg");
-                        dataJson = jsonObject.getString("body");
+                if (jsonObject.has("head")){
+                    JSONObject head = jsonObject.getJSONObject("head");
+                    code = head.getString("errCode");
+                    msg = head.getString("errMsg");
+                    dataJson = jsonObject.getString("body");
 
-                    } else if (jsonObject.has("resultCode")){
-                        String resultCode = jsonObject.getString("resultCode");
-                        code = ParseUtil.parseInt(resultCode);
-                        msg = jsonObject.getString("resultDesc");
-                        dataJson = jsonObject.getString("body");
+                } else if (jsonObject.has("resultCode")){
+                    code = jsonObject.getString("resultCode");
+                    msg = jsonObject.getString("resultDesc");
+                    dataJson = jsonObject.getString("body");
 
-                    } else if (jsonObject.has("code")){
-                        code = jsonObject.getInt("code");
+                } else if (jsonObject.has("code")){
+                    code = jsonObject.getString("code");
 
-                        if (jsonObject.has("msg")){
-                            msg = jsonObject.getString("msg");
-                        }
-                        if (jsonObject.has("data")){
-                            dataJson = jsonObject.getString("data");
-                        }
-
-                    } else {
-                        dataJson = json;
+                    if (jsonObject.has("msg")){
+                        msg = jsonObject.getString("msg");
                     }
+                    if (jsonObject.has("data")){
+                        dataJson = jsonObject.getString("data");
+                    }
+
+                } else {
+                    dataJson = json;
+                }
 
 //                    if ("{}".equals(dataJson)){
 //                        dataJson = dataJson.replace("\"data\":{}", "\"data\":[]");
 //                    }
 
-                    if (dataJson == null){
-                        dataJson = "[]";
-                    }
+                if (dataJson == null){
+                    dataJson = "[]";
+                }
 
-                    JsonElement jsonElement = JsonParser.parseString(dataJson);
-                    if (jsonElement.isJsonArray()){
-                        JsonArray jsonArray = jsonElement.getAsJsonArray();
-                        for (JsonElement element : jsonArray) {
-                            T t = gson.fromJson(element, dataType);
-                            if (t != null){
-                                data.add(t);
-                            }
+                JsonElement jsonElement = JsonParser.parseString(dataJson);
+                if (jsonElement.isJsonArray()){
+                    JsonArray jsonArray = jsonElement.getAsJsonArray();
+                    for (JsonElement element : jsonArray) {
+                        T t = gson.fromJson(element, dataType);
+                        if (t != null){
+                            data.add(t);
                         }
                     }
-
-                } catch (Exception e) {
-                    response.close();
-                    throw ExceptionUtil.serverException(ErrorCons.JSON_ERROR, e.getMessage());
                 }
 
-                if (code == ErrorCons.CODE_TYPE_ERROR){
-                    msg = ErrorCons.MSG_CODE_TYPE_ERROR;
-                }
-
-                if (code != ErrorCons.CODE_SUCCESS) {//code不等于200，说明数据不正确，抛出异常
-                    response.close();
-                    throw ExceptionUtil.serverException(code, msg);
-                }
-
+            } catch (Exception e) {
+                response.close();
+                throw ExceptionUtil.handleException(e);
             }
+
+            ErrorCons.codeSuccessSet.add(ErrorCons.CODE_SUCCESS);
+            ErrorCons.codeSuccessSet.add(ErrorCons.CODE_SUCCESS_1);
+
+            //code不等于200，说明数据不正确，抛出异常
+            if (!ErrorCons.codeSuccessSet.contains(code)) {
+                response.close();
+                throw ExceptionUtil.postServerException(code, msg, data);
+            }
+
+        }
 
 //            if (data == null){
 //                data = gson.fromJson("[]", new TypeToken<List<T>>(){}.getType());
 //            }
 
-            return data;
+        return data;
 
-        } else {
-            throw ExceptionUtil.handleException(new HttpStatusCodeException(response));
-        }
     }
+
 
 }

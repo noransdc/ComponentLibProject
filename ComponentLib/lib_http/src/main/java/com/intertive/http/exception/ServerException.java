@@ -7,15 +7,16 @@ package com.intertive.http.exception;
 public class ServerException extends RuntimeException{
 
 
-    public int code;
+    public String code;
     public String message;
+    public Object dataObj;
 
 
-    public int getCode() {
+    public String getCode() {
         return code;
     }
 
-    public void setCode(int code) {
+    public void setCode(String code) {
         this.code = code;
     }
 
@@ -28,5 +29,20 @@ public class ServerException extends RuntimeException{
         this.message = message;
     }
 
+    public Object getDataObj() {
+        return dataObj;
+    }
 
+    public void setDataObj(Object dataObj) {
+        this.dataObj = dataObj;
+    }
+
+    @Override
+    public String toString() {
+        return "ServerException{" +
+                "code='" + code + '\'' +
+                ", message='" + message + '\'' +
+                ", dataObj=" + dataObj +
+                '}';
+    }
 }

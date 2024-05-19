@@ -1,54 +1,47 @@
 package com.intertive.http;
 
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+
 /**
  * @author Nevio
  * on 2022/2/2
  */
 public class ErrorCons {
 
-    /**
-     * 对应HTTP的状态码
-     */
-    public static final int BAD_REQUEST = 400;
-    public static final int UNAUTHORIZED = 401;
-    public static final int FORBIDDEN = 403;
-    public static final int NOT_FOUND = 404;
-    public static final int METHOD_NOT_ALLOWED = 405;
-    public static final int REQUEST_TIMEOUT = 408;
-    public static final int CONFLICT = 409;
-    public static final int PRECONDITION_FAILED = 412;
-    public static final int INTERNAL_SERVER_ERROR = 500;
-    public static final int BAD_GATEWAY = 502;
-    public static final int SERVICE_UNAVAILABLE = 503;
-    public static final int GATEWAY_TIMEOUT = 504;
-
-    public static final int UNKNOWN = 1500;
-    public static final int NETWORK_ERROR = 1501;
-    public static final int PARSE_ERROR = 1502;
-    public static final int HTTP_ERROR = 1504;
-    public static final int JSON_ERROR = 1505;
-    public static final int CODE_TYPE_ERROR = 1506;
+    public static Set<String> codeSuccessSet = new HashSet<>();
 
     /**
      * 完全成功
      */
-    public static int CODE_SUCCESS = 0;
+    public static String CODE_SUCCESS = "0";
+    public static String CODE_SUCCESS_1 = "0000";
+
     /**
-     * Token 失效
+     * 对应HTTP的状态码
      */
-    public static final int CODE_TOKEN_INVALID = 602;
-    /**
-     * 缺少参数
-     */
-    public static final int CODE_NO_MISSING_PARAMETER = 400400;
-    /**
-     * 其他情况
-     */
-    public static final int CODE_NO_OTHER = 403;
-    /**
-     * 统一提示
-     */
-    public static final int CODE_SHOW_TOAST = 400000;
+    public static final String BAD_REQUEST = "400";
+    public static final String UNAUTHORIZED = "401";
+    public static final String FORBIDDEN = "403";
+    public static final String NOT_FOUND = "404";
+    public static final String METHOD_NOT_ALLOWED = "405";
+    public static final String REQUEST_TIMEOUT = "408";
+    public static final String CONFLICT = "409";
+    public static final String PRECONDITION_FAILED = "412";
+    public static final String INTERNAL_SERVER_ERROR = "500";
+    public static final String BAD_GATEWAY = "502";
+    public static final String SERVICE_UNAVAILABLE = "503";
+    public static final String GATEWAY_TIMEOUT = "504";
+
+    public static final String UNKNOWN = "1500";
+    public static final String NETWORK_ERROR = "1501";
+    public static final String PARSE_ERROR = "1502";
+    public static final String HTTP_ERROR = "1504";
+    public static final String JSON_ERROR = "1505";
+    public static final String CODE_TYPE_ERROR = "1506";
+
 
 
 

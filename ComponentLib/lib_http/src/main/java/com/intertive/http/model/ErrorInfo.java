@@ -6,23 +6,25 @@ package com.intertive.http.model;
  */
 public class ErrorInfo extends Throwable {
 
-    private int code;
+    private String code;
     private String msg;
+    private Object dataObj;
 
     public ErrorInfo() {
     }
 
-    public ErrorInfo(int code, String msg) {
+    public ErrorInfo(String code, String msg, Object obj) {
         super();
         this.code = code;
         this.msg = msg;
+        this.dataObj = obj;
     }
 
-    public int getCode() {
+    public String getCode() {
         return code;
     }
 
-    public void setCode(int code) {
+    public void setCode(String code) {
         this.code = code;
     }
 
@@ -34,11 +36,20 @@ public class ErrorInfo extends Throwable {
         this.msg = msg;
     }
 
+    public Object getDataObj() {
+        return dataObj;
+    }
+
+    public void setDataObj(Object dataObj) {
+        this.dataObj = dataObj;
+    }
+
     @Override
     public String toString() {
         return "ErrorInfo{" +
-                "code=" + code +
+                "code='" + code + '\'' +
                 ", msg='" + msg + '\'' +
+                ", dataObj=" + dataObj +
                 '}';
     }
 }
