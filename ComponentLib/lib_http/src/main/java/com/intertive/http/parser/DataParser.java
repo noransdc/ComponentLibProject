@@ -48,14 +48,26 @@ public class DataParser<T> extends TypeParser<T> {
 
                 if (jsonObject.has("head")){
                     JSONObject head = jsonObject.getJSONObject("head");
-                    code = head.getString("errCode");
-                    msg = head.getString("errMsg");
-                    dataJson = jsonObject.getString("body");
+                    if (head.has("errCode")){
+                        code = head.getString("errCode");
+                    }
+                    if (head.has("errMsg")){
+                        msg = head.getString("errMsg");
+                    }
+                    if (jsonObject.has("body")){
+                        dataJson = jsonObject.getString("body");
+                    }
 
                 } else if (jsonObject.has("resultCode")){
-                    code = jsonObject.getString("resultCode");
-                    msg = jsonObject.getString("resultDesc");
-                    dataJson = jsonObject.getString("body");
+                    if (jsonObject.has("resultCode")){
+                        code = jsonObject.getString("resultCode");
+                    }
+                    if (jsonObject.has("resultDesc")){
+                        msg = jsonObject.getString("resultDesc");
+                    }
+                    if (jsonObject.has("body")){
+                        dataJson = jsonObject.getString("body");
+                    }
 
                 } else if (jsonObject.has("code")){
                     code = jsonObject.getString("code");
