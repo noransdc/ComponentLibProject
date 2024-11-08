@@ -9,6 +9,6 @@ public interface ApiCallback<T> {
 
     void onSuccess(T data);
 
-    void onFailed(int code, String msg);
+    void onFailed(String code, String msg);
 
 }
