@@ -40,7 +40,8 @@ android {
 }
 
 dependencies {
-    implementation fileTree(include: ['*.jar'], dir: 'libs')
+    api fileTree(include: ['*.jar', '*.aar'], dir: 'libs')
+
     compileOnly dep.appcompat
 
     api dep.okhttp
