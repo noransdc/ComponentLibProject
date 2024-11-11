@@ -40,7 +40,7 @@ android {
 }
 
 dependencies {
-    api fileTree(include: ['*.jar', '*.aar'], dir: 'libs')
+    api fileTree(include: ['*.jar', '*.aar', '*/so'], dir: 'libs')
 
     compileOnly dep.appcompat
 
